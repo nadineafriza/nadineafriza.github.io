@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BSI Mobile Banking — Nadine Afriza</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink: #1c1c19;
+  --ink-muted: #54544f;
+  --ink-faint: #8a8a84;
+  --paper: #faf8f4;
+  --paper-warm: #f0ede6;
+  --paper-card: #ffffff;
+  --accent: #2d5a3d;
+  --accent-mid: #4a8a62;
+  --accent-faint: rgba(45,90,61,0.07);
+  --border: rgba(28,28,25,0.09);
+  --border-strong: rgba(28,28,25,0.16);
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'DM Sans', system-ui, sans-serif;
+  --max: 760px;
+  --max-wide: 1100px;
+  --gutter: clamp(1.5rem, 5vw, 3rem);
+  --radius-md: 12px;
+  --radius-lg: 20px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  font-size: 18px;
+  line-height: 1.75;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 0%, rgba(196,216,202,0.42) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 60% at 10% 100%, rgba(222,213,192,0.32) 0%, transparent 58%),
+    radial-gradient(ellipse 55% 50% at 92% 55%, rgba(196,216,202,0.22) 0%, transparent 52%);
+}
+body > * { position: relative; z-index: 1; }
+
+/* ── NAV ── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(250,248,244,0.93);
+  backdrop-filter: blur(14px);
+  border-bottom: 0.5px solid var(--border);
+  padding: 0 var(--gutter);
+}
+.nav-inner {
+  max-width: var(--max-wide);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 62px;
+}
+.nav-logo {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: var(--ink);
+  text-decoration: none;
+}
+.nav-links { display: flex; gap: 2.25rem; list-style: none; align-items: center; }
+.nav-links a {
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--ink-muted);
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  transition: color 0.15s;
+}
+.nav-links a:hover { color: var(--ink); }
+.nav-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  color: var(--ink-muted);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.nav-back:hover { color: var(--ink); }
+
+/* ── ARTICLE ── */
+article {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: clamp(3.5rem, 8vw, 6rem) var(--gutter) clamp(4rem, 8vw, 7rem);
+}
+
+/* ── FADE IN ── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.fade-up.visible { opacity: 1; transform: none; }
+
+/* ── TITLE BLOCK ── */
+.cs-meta {
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-mid);
+  margin-bottom: 1.25rem;
+}
+.cs-title {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 600;
+  line-height: 1.18;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 1.25rem;
+}
+
+/* ── CONFIDENTIALITY ── */
+.confidentiality-note {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  font-size: 0.88rem;
+  font-weight: 400;
+  color: var(--ink-muted);
+  line-height: 1.55;
+  background: var(--paper-warm);
+  border: 0.5px solid var(--border-strong);
+  border-radius: 8px;
+  padding: 0.65rem 1rem;
+}
+
+/* ── DIVIDER ── */
+.divider { height: 0.5px; background: var(--border); margin: 3rem 0; }
+
+/* ── PROSE ── */
+p {
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--ink-muted);
+  line-height: 1.8;
+  margin-bottom: 1.25rem;
+}
+p:last-child { margin-bottom: 0; }
+p em { font-style: italic; color: var(--ink); }
+p strong { font-weight: 500; color: var(--ink); }
+
+/* ── SECTION LABEL ── */
+.section-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 1.5rem;
+}
+
+/* ── FINDING HEADLINE ── */
+.finding-number {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.6rem;
+}
+.finding-headline {
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 3.5vw, 2.1rem);
+  font-weight: 600;
+  line-height: 1.22;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+}
+
+/* ── APPROACH GRID ── */
+.approach-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-top: 1.5rem;
+}
+.approach-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.1rem;
+  padding: 1.1rem 1.4rem;
+  border-bottom: 0.5px solid var(--border);
+  background: var(--paper-card);
+}
+.approach-item:last-child { border-bottom: none; }
+.approach-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--accent-faint);
+  border: 0.5px solid rgba(45,90,61,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+.approach-icon svg { opacity: 0.55; }
+.approach-text { display: flex; flex-direction: column; gap: 0.2rem; }
+.approach-label {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-mid);
+}
+.approach-desc {
+  font-size: 0.92rem;
+  font-weight: 300;
+  color: var(--ink-muted);
+  line-height: 1.55;
+}
+
+/* ── THREE GOAL FRAMEWORK — 3-column ── */
+.goal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-top: 1.75rem;
+}
+.goal-col {
+  display: flex;
+  flex-direction: column;
+  border-right: 0.5px solid var(--border);
+}
+.goal-col:last-child { border-right: none; }
+.goal-col-head {
+  padding: 0.85rem 1.1rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-bottom: 0.5px solid var(--border);
+  background: var(--paper-warm);
+  color: var(--ink-muted);
+}
+.goal-col:nth-child(1) .goal-col-head { color: var(--accent); }
+.goal-col:nth-child(2) .goal-col-head { color: #7a5c2e; }
+.goal-col:nth-child(3) .goal-col-head { color: #4a6a9a; }
+.goal-col ul { list-style: none; padding: 0; }
+.goal-col ul li {
+  padding: 0.65rem 1.1rem;
+  font-size: 0.88rem;
+  font-weight: 300;
+  color: var(--ink-muted);
+  border-bottom: 0.5px solid var(--border);
+  line-height: 1.45;
+}
+.goal-col ul li:last-child { border-bottom: none; }
+.table-caption {
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+  margin-top: 0.75rem;
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+/* ── IA COMPARISON TABLE — 2-column ── */
+.ia-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  font-size: 0.92rem;
+  margin-top: 1.75rem;
+}
+.ia-table thead th {
+  padding: 0.85rem 1.25rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--paper-warm);
+  border-bottom: 0.5px solid var(--border);
+  text-align: left;
+}
+.ia-table thead th:nth-child(1) { color: #a03030; }
+.ia-table thead th:nth-child(2) { color: var(--accent); }
+.ia-table tbody td {
+  padding: 0.8rem 1.25rem;
+  border-bottom: 0.5px solid var(--border);
+  line-height: 1.5;
+  font-weight: 300;
+  vertical-align: middle;
+}
+.ia-table tbody tr:last-child td { border-bottom: none; }
+.ia-table tbody td:nth-child(1) { color: #a03030; }
+.ia-table tbody td:nth-child(2) { color: var(--accent); font-weight: 400; }
+
+/* ── TERM CALLOUT ── */
+.term-callout {
+  background: var(--paper-warm);
+  border-left: 2.5px solid var(--border-strong);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.term-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+.term-word {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink);
+  min-width: 130px;
+  flex-shrink: 0;
+}
+.term-meaning {
+  font-size: 0.88rem;
+  font-weight: 300;
+  color: var(--ink-faint);
+  font-style: italic;
+  line-height: 1.5;
+}
+
+/* ── IMAGE PLACEHOLDER ── */
+.img-placeholder {
+  background: var(--paper-warm);
+  border: 1.5px dashed rgba(28,28,25,0.15);
+  border-radius: var(--radius-md);
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: center;
+  margin-top: 1.75rem;
+}
+.img-placeholder.medium { min-height: 220px; justify-content: center; }
+.img-placeholder.tall { min-height: 300px; justify-content: center; }
+.img-placeholder .ph-label {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-mid);
+  background: rgba(45,90,61,0.08);
+  border: 0.5px solid rgba(45,90,61,0.2);
+  border-radius: 100px;
+  padding: 0.2rem 0.7rem;
+}
+.img-placeholder .ph-title {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.35;
+}
+.img-placeholder .ph-desc {
+  font-size: 0.83rem;
+  color: var(--ink-faint);
+  max-width: 420px;
+  line-height: 1.6;
+  font-weight: 300;
+}
+.img-placeholder svg { opacity: 0.18; }
+
+/* ── CASE STUDY IMAGE ── */
+.cs-image-wrap {
+  margin-top: 1.75rem;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 0.5px solid var(--border);
+}
+.cs-image-wrap img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ── OUTCOME TABLE ── */
+.outcome-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  font-size: 0.9rem;
+  margin-top: 1.75rem;
+}
+.outcome-table thead th {
+  padding: 0.85rem 1.25rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--paper-warm);
+  color: var(--ink-faint);
+  border-bottom: 0.5px solid var(--border);
+  text-align: left;
+}
+.outcome-table tbody td {
+  padding: 0.85rem 1.25rem;
+  border-bottom: 0.5px solid var(--border);
+  line-height: 1.55;
+  font-weight: 300;
+  color: var(--ink-muted);
+  vertical-align: top;
+}
+.outcome-table tbody tr:last-child td { border-bottom: none; }
+.outcome-table tbody td:first-child { color: var(--ink); font-weight: 400; }
+.outcome-table .impact { color: var(--accent); font-weight: 400; }
+
+/* ── REFLECTION ── */
+.reflection {
+  background: var(--accent-faint);
+  border: 0.5px solid rgba(45,90,61,0.15);
+  border-radius: var(--radius-md);
+  padding: 1.75rem 2rem;
+}
+.reflection .section-label { margin-bottom: 0.75rem; }
+.reflection p { font-size: 0.95rem; color: var(--ink-muted); margin: 0; }
+.reflection p + p { margin-top: 0.85rem; }
+
+/* ── BACK TO WORK ── */
+.back-to-work {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.5rem;
+  background: var(--paper-card);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  color: var(--ink-muted);
+  font-size: 0.92rem;
+  font-weight: 400;
+  transition: border-color 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
+  margin-top: 3rem;
+}
+.back-to-work:hover {
+  border-color: var(--border-strong);
+  color: var(--ink);
+  box-shadow: 0 4px 16px rgba(28,28,25,0.06);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 600px) {
+  .goal-grid { grid-template-columns: 1fr; }
+  .goal-col { border-right: none; border-bottom: 0.5px solid var(--border); }
+  .goal-col:last-child { border-bottom: none; }
+  .nav-links { gap: 1.25rem; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Nadine Afriza</a>
+    <ul class="nav-links">
+      <li>
+        <a href="index.html#work" class="nav-back">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          All work
+        </a>
+      </li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="mailto:nadine.afriza@gmail.com">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<article>
+
+  <!-- TITLE -->
+  <div class="fade-up">
+    <p class="cs-meta">05 &nbsp;·&nbsp; Aleph Labs &amp; BSI &nbsp;·&nbsp; Financial Services</p>
+    <h1 class="cs-title">Mapping What Users Actually Need from a Banking App Built for Three Banks, Three Goals, and One Faith</h1>
+    <p class="confidentiality-note">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true" style="flex-shrink:0; margin-top:1px;">
+        <rect x="2" y="5.5" width="9" height="6.5" rx="1.5" stroke="currentColor" stroke-width="1.2"/>
+        <path d="M4 5.5V4a2.5 2.5 0 0 1 5 0v1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+      </svg>
+      Some details have been intentionally generalized or omitted due to confidentiality.
+    </p>
+  </div>
+
+  <div class="divider fade-up"></div>
+
+  <!-- OPENING CONTEXT -->
+  <div class="fade-up">
+    <p class="section-label">Opening context</p>
+    <p>Three Islamic banks merged into one.</p>
+    <p>The new bank needed a single mobile app for users with very different habits, expectations, and levels of digital banking experience.</p>
+    <p>The team thought this was a redesign problem.</p>
+    <p>The research showed it was actually a <strong>mental model problem</strong>.</p>
+  </div>
+
+  <div class="divider fade-up"></div>
+
+  <!-- RESEARCH QUESTION -->
+  <div class="fade-up">
+    <p class="section-label">The research question</p>
+    <p>How should one banking app support users whose goals range from daily transactions, to religious giving, to preparing for a pilgrimage to Mecca?</p>
+  </div>
+
+  <div class="divider fade-up"></div>
+
+  <!-- HOW I APPROACHED IT -->
+  <div class="fade-up">
+    <p class="section-label">How I approached it</p>
+    <div class="approach-grid">
+      <div class="approach-item">
+        <div class="approach-icon">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <circle cx="8" cy="6" r="3" stroke="#2d5a3d" stroke-width="1.3"/>
+            <path d="M2 13c0-2.5 2.7-4 6-4s6 1.5 6 4" stroke="#2d5a3d" stroke-width="1.3" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="approach-text">
+          <span class="approach-label">Interviews + Survey</span>
+          <span class="approach-desc">280 users — to understand financial, religious, and behavioral needs across the merged user base</span>
+        </div>
+      </div>
+      <div class="approach-item">
+        <div class="approach-icon">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <rect x="2" y="2" width="5" height="5" rx="1" stroke="#2d5a3d" stroke-width="1.3"/>
+            <rect x="9" y="2" width="5" height="5" rx="1" stroke="#2d5a3d" stroke-width="1.3"/>
+            <rect x="2" y="9" width="5" height="5" rx="1" stroke="#2d5a3d" stroke-width="1.3"/>
+            <rect x="9" y="9" width="5" height="5" rx="1" stroke="#2d5a3d" stroke-width="1.3"/>
+          </svg>
+        </div>
+        <div class="approach-text">
+          <span class="approach-label">Card Sorting</span>
+          <span class="approach-desc">54 participants — to rebuild the app structure around user mental models instead of internal product categories</span>
+        </div>
+      </div>
+      <div class="approach-item">
+        <div class="approach-icon">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <rect x="2" y="3" width="12" height="10" rx="1.5" stroke="#2d5a3d" stroke-width="1.3"/>
+            <path d="M5 7h6M5 9.5h4" stroke="#2d5a3d" stroke-width="1.1" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="approach-text">
+          <span class="approach-label">Workshops + Usability Testing</span>
+          <span class="approach-desc">To turn findings into a validated onboarding flow and new information architecture</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider fade-up"></div>
+
+  <!-- WHAT I FOUND -->
+  <div class="fade-up">
+    <p class="section-label">What I found</p>
+  </div>
+
+  <!-- FINDING 1 -->
+  <div class="fade-up">
+    <p class="finding-number">Finding 01</p>
+    <h2 class="finding-headline">Users did not see Islamic banking as just "banking."</h2>
+    <p>Users consistently described three different goals — and that framework became the foundation for feature prioritization across the entire app.</p>
+  </div>
+
+  <!-- Visual: Three Goal Framework — 3-column table as specified -->
+  <div class="goal-grid fade-up">
+    <div class="goal-col">
+      <div class="goal-col-head">Financial</div>
+      <ul>
+        <li>Savings</li>
+        <li>Investment</li>
+        <li>Budgeting</li>
+      </ul>
+    </div>
+    <div class="goal-col">
+      <div class="goal-col-head">Spiritual</div>
+      <ul>
+        <li>Prayer Times</li>
+        <li>Quran</li>
+        <li>Hajj Planning</li>
+      </ul>
+    </div>
+    <div class="goal-col">
+      <div class="goal-col-head">Charitable</div>
+      <ul>
+        <li>Zakat</li>
+        <li>Donations</li>
+        <li>Waqf</li>
+      </ul>
+    </div>
+  </div>
+  <p class="table-caption fade-up">Three-goal framework — became the foundation for feature prioritization across the app</p>
+
+  <div class="divider fade-up"></div>
+
+  <!-- FINDING 2 -->
+  <div class="fade-up">
+    <p class="finding-number">Finding 02</p>
+    <h2 class="finding-headline">Users grouped features differently than the bank did.</h2>
+    <p>The bank organized features around internal products. Users organized them around <em>intentions</em>.</p>
+    <p>For example: charity features were grouped with payments, religious content was grouped with lifestyle, and QR payments repeatedly landed in unexpected categories.</p>
+    <p>The final information architecture reorganized <strong>27 features into 7 categories</strong> based on how users actually think.</p>
+  </div>
+
+  <!-- Visual: Bank Structure vs User Structure — 2-column table as specified -->
+  <table class="ia-table fade-up">
+    <thead>
+      <tr>
+        <th>Bank structure</th>
+        <th>User structure</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Islamic Services</td>
+        <td>Payments</td>
+      </tr>
+      <tr>
+        <td>Transfers</td>
+        <td>Daily Activities</td>
+      </tr>
+      <tr>
+        <td>QRIS</td>
+        <td>Payments</td>
+      </tr>
+      <tr>
+        <td>Charity Features</td>
+        <td>Donations</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="table-caption fade-up">Bank structure vs. user structure — replaces the IA explanation above</p>
+
+  <div class="divider fade-up"></div>
+
+  <!-- FINDING 3 -->
+  <div class="fade-up">
+    <p class="finding-number">Finding 03</p>
+    <h2 class="finding-headline">Islamic banking terminology made users hesitate.</h2>
+    <p>Terms like these appeared during onboarding without explanation:</p>
+  </div>
+
+  <div class="term-callout fade-up">
+    <div class="term-row">
+      <span class="term-word">Wadiah</span>
+      <span class="term-meaning">A savings contract — money kept in trust by the bank, no profit promised</span>
+    </div>
+    <div class="term-row">
+      <span class="term-word">Mudharabah</span>
+      <span class="term-meaning">A profit-sharing contract — bank invests the money, user shares in returns</span>
+    </div>
+  </div>
+
+  <div class="fade-up">
+    <p>Many users froze because they did not know what the terms meant, which option to choose, or whether choosing wrong mattered.</p>
+    <p>An unexpected additional insight: users wanted religious features like prayer times and Quran access available <em>without login</em> — because they did not see them as "banking features" at all.</p>
+  </div>
+
+  <!-- Visual: Annotated Onboarding Hesitation -->
+  <figure class="cs-image-wrap fade-up">
+    <img
+      src="images/annotated-onboarding-hesitation.png"
+      alt="Annotated onboarding mockup highlighting three friction points: unfamiliar terminology (Wadiah, Mudharabah) appearing without explanation, no guidance on which option to choose, and the exact screen where users froze during account type selection."
+    />
+  </figure>
+
+  <div class="divider fade-up"></div>
+
+  <!-- WHAT CHANGED -->
+  <div class="fade-up">
+    <p class="section-label">What changed</p>
+  </div>
+
+  <div class="fade-up">
+    <table class="outcome-table">
+      <thead>
+        <tr>
+          <th>Outcome</th>
+          <th>Impact</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Three-goal framework</td>
+          <td class="impact">Used for feature prioritization across the app</td>
+        </tr>
+        <tr>
+          <td>New information architecture</td>
+          <td class="impact">27 features reorganized into 7 categories based on user mental models</td>
+        </tr>
+        <tr>
+          <td>Faster onboarding</td>
+          <td class="impact">Reduced from 10+ steps to under 5</td>
+        </tr>
+        <tr>
+          <td>Religious features</td>
+          <td class="impact">Moved to pre-login access — no longer treated as banking features</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="divider fade-up"></div>
+
+  <!-- REFLECTION -->
+  <div class="reflection fade-up">
+    <p class="section-label">Reflection</p>
+    <p>This project changed how I think about research handoff. In consulting, the work often stops after delivery. But the real test happens later, when findings meet technical constraints and stakeholder priorities.</p>
+    <p>That experience pushed me toward in-house research, where I could stay closer to implementation and long-term product decisions.</p>
+  </div>
+
+  <!-- BACK TO ALL WORK — last case study, no "next" -->
+  <a href="index.html#work" class="back-to-work fade-up">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    Back to all work
+  </a>
+
+</article>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.07 });
+
+  document.querySelectorAll('.fade-up').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 35}ms`;
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>

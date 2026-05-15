@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Voice Hub — Nadine Afriza</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink: #1c1c19;
+  --ink-muted: #54544f;
+  --ink-faint: #8a8a84;
+  --paper: #faf8f4;
+  --paper-warm: #f0ede6;
+  --paper-card: #ffffff;
+  --accent: #2d5a3d;
+  --accent-mid: #4a8a62;
+  --accent-faint: rgba(45,90,61,0.07);
+  --border: rgba(28,28,25,0.09);
+  --border-strong: rgba(28,28,25,0.16);
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'DM Sans', system-ui, sans-serif;
+  --max: 760px;
+  --max-wide: 1100px;
+  --gutter: clamp(1.5rem, 5vw, 3rem);
+  --radius-md: 12px;
+  --radius-lg: 20px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  font-size: 18px;
+  line-height: 1.75;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 0%, rgba(196,216,202,0.42) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 60% at 10% 100%, rgba(222,213,192,0.32) 0%, transparent 58%),
+    radial-gradient(ellipse 55% 50% at 92% 55%, rgba(196,216,202,0.22) 0%, transparent 52%);
+}
+body > * { position: relative; z-index: 1; }
+
+/* ── NAV ── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(250,248,244,0.93);
+  backdrop-filter: blur(14px);
+  border-bottom: 0.5px solid var(--border);
+  padding: 0 var(--gutter);
+}
+.nav-inner {
+  max-width: var(--max-wide);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 62px;
+}
+.nav-logo {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: var(--ink);
+  text-decoration: none;
+}
+.nav-links { display: flex; gap: 2.25rem; list-style: none; align-items: center; }
+.nav-links a {
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--ink-muted);
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  transition: color 0.15s;
+}
+.nav-links a:hover { color: var(--ink); }
+.nav-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  color: var(--ink-muted);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.nav-back:hover { color: var(--ink); }
+
+/* ── ARTICLE ── */
+article {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: clamp(3.5rem, 8vw, 6rem) var(--gutter) clamp(4rem, 8vw, 7rem);
+}
+
+/* ── FADE IN ── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.fade-up.visible { opacity: 1; transform: none; }
+
+/* ── TITLE BLOCK ── */
+.cs-meta {
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-mid);
+  margin-bottom: 1.25rem;
+}
+.cs-title {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 600;
+  line-height: 1.18;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 1.25rem;
+}
+
+/* ── CONFIDENTIALITY NOTICE ── */
+.confidentiality-note {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  font-size: 0.88rem;
+  font-weight: 400;
+  color: var(--ink-muted);
+  line-height: 1.55;
+  margin-top: 0;
+  margin-bottom: 0;
+  letter-spacing: 0.01em;
+  background: var(--paper-warm);
+  border: 0.5px solid var(--border-strong);
+  border-radius: 8px;
+  padding: 0.65rem 1rem;
+}
+
+/* ── DIVIDERS ── */
+.divider { height: 0.5px; background: var(--border); margin: 3rem 0; }
+
+/* ── PROSE ── */
+p {
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--ink-muted);
+  line-height: 1.8;
+  margin-bottom: 1.25rem;
+}
+p:last-child { margin-bottom: 0; }
+p em { font-style: italic; color: var(--ink); }
+p strong { font-weight: 500; color: var(--ink); }
+
+/* ── SECTION LABEL ── */
+.section-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 1.5rem;
+}
+
+/* ── FINDING HEADLINE ── */
+.finding-number {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.6rem;
+}
+.finding-headline {
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 3.5vw, 2.1rem);
+  font-weight: 600;
+  line-height: 1.22;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+}
+
+/* ── SOURCE LIST ── */
+.source-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin: 1.5rem 0;
+}
+.source-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1.25rem;
+  font-size: 0.92rem;
+  font-weight: 400;
+  color: var(--ink-muted);
+  border-bottom: 0.5px solid var(--border);
+  background: var(--paper-card);
+}
+.source-list li:last-child { border-bottom: none; }
+.source-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+  opacity: 0.6;
+}
+
+/* ── PIPELINE STEPS ── */
+.pipeline-steps {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin: 1.5rem 0;
+}
+.pipeline-steps li {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 0.9rem 1.25rem;
+  font-size: 0.92rem;
+  color: var(--ink-muted);
+  font-weight: 300;
+  border-bottom: 0.5px solid var(--border);
+  background: var(--paper-card);
+  line-height: 1.55;
+}
+.pipeline-steps li:last-child { border-bottom: none; }
+.step-num {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--accent-mid);
+  background: var(--accent-faint);
+  border-radius: 100px;
+  padding: 0.15rem 0.55rem;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+/* ── IMAGE PLACEHOLDER ── */
+.img-placeholder {
+  background: var(--paper-warm);
+  border: 1.5px dashed rgba(28,28,25,0.15);
+  border-radius: var(--radius-md);
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: center;
+}
+.img-placeholder .ph-label {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-mid);
+  background: rgba(45,90,61,0.08);
+  border: 0.5px solid rgba(45,90,61,0.2);
+  border-radius: 100px;
+  padding: 0.2rem 0.7rem;
+}
+.img-placeholder .ph-title {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.35;
+}
+.img-placeholder .ph-desc {
+  font-size: 0.83rem;
+  color: var(--ink-faint);
+  max-width: 420px;
+  line-height: 1.6;
+  font-weight: 300;
+}
+.img-placeholder svg { opacity: 0.18; }
+.img-placeholder.tall { min-height: 300px; justify-content: center; }
+.img-placeholder.medium { min-height: 220px; justify-content: center; }
+
+/* ── BEFORE / AFTER TABLE — the strongest visual ── */
+.before-after {
+  width: 100%;
+  border-collapse: collapse;
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  font-size: 0.92rem;
+}
+.before-after thead th {
+  padding: 0.85rem 1.25rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--paper-warm);
+  border-bottom: 0.5px solid var(--border);
+  text-align: left;
+}
+.before-after thead th:nth-child(2) { color: #a03030; }
+.before-after thead th:nth-child(3) { color: var(--accent); }
+.before-after tbody td {
+  padding: 0.85rem 1.25rem;
+  border-bottom: 0.5px solid var(--border);
+  line-height: 1.5;
+  vertical-align: middle;
+}
+.before-after tbody tr:last-child td { border-bottom: none; }
+.before-after tbody td:first-child {
+  font-weight: 400;
+  color: var(--ink);
+  font-size: 0.85rem;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+.col-before {
+  font-weight: 300;
+  color: #a03030;
+}
+.col-after {
+  font-weight: 400;
+  color: var(--accent);
+}
+.table-caption {
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+  margin-top: 0.75rem;
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+/* ── PATTERN CALLOUT ── */
+.pattern-callout {
+  background: var(--paper-warm);
+  border-left: 2.5px solid var(--accent);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+}
+.pattern-callout p {
+  font-size: 0.95rem;
+  color: var(--ink);
+  font-weight: 400;
+  margin: 0;
+  line-height: 1.65;
+}
+
+/* ── REFLECTION ── */
+.reflection {
+  background: var(--accent-faint);
+  border: 0.5px solid rgba(45,90,61,0.15);
+  border-radius: var(--radius-md);
+  padding: 1.75rem 2rem;
+}
+.reflection .section-label { margin-bottom: 0.75rem; }
+.reflection p { font-size: 0.95rem; color: var(--ink-muted); margin: 0; }
+.reflection p + p { margin-top: 0.85rem; }
+
+/* ── NEXT CASE STUDY ── */
+.next-cs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.75rem 2rem;
+  background: var(--paper-card);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  margin-top: 3rem;
+}
+.next-cs:hover {
+  border-color: var(--border-strong);
+  box-shadow: 0 8px 32px rgba(28,28,25,0.07);
+  transform: translateY(-2px);
+}
+.next-cs-label {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.4rem;
+}
+.next-cs-title {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.35;
+}
+.next-cs-arrow {
+  flex-shrink: 0;
+  color: var(--accent);
+  opacity: 0;
+  transition: opacity 0.18s, transform 0.18s;
+}
+.next-cs:hover .next-cs-arrow { opacity: 1; transform: translateX(4px); }
+
+@media (max-width: 600px) {
+  .nav-links { gap: 1.25rem; }
+  .before-after tbody td:first-child { white-space: normal; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Nadine Afriza</a>
+    <ul class="nav-links">
+      <li>
+        <a href="index.html#work" class="nav-back">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          All work
+        </a>
+      </li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="mailto:nadine.afriza@gmail.com">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<article>
+
+  <!-- TITLE -->
+  <div class="fade-up">
+    <p class="cs-meta">03 &nbsp;·&nbsp; Wego &nbsp;·&nbsp; ResearchOps</p>
+    <h1 class="cs-title">Building a User Feedback System That Replaced Gut Feel with Evidence</h1>
+    <p class="confidentiality-note">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true" style="flex-shrink:0; margin-top:1px;">
+        <rect x="2" y="5.5" width="9" height="6.5" rx="1.5" stroke="currentColor" stroke-width="1.2"/>
+        <path d="M4 5.5V4a2.5 2.5 0 0 1 5 0v1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+      </svg>
+      Some details have been intentionally generalized or omitted due to confidentiality.
+    </p>
+  </div>
+
+  <div class="divider fade-up"></div>
+
+  <!-- OPENING CONTEXT -->
+  <div class="fade-up">
+    <p class="section-label">Opening context</p>
+    <p>Wego received thousands of user comments every month across app reviews, social media, and support channels.</p>
+    <p>Nobody was analyzing them systematically.</p>
+    <p>Product decisions about the post-booking experience relied mostly on gut feel and scattered escalations from customer support.</p>
+    <p>I built a system to change that.</p>
+  </div>
+
+  <div class="divider fade-up"></div>
+
+  <!-- RESEARCH QUESTION -->
+  <div class="fade-up">
+    <p class="section-label">The research question</p>
+    <p>How do you turn thousands of fragmented user comments into something product teams can actually use to make decisions?</p>
+  </div>
+
+  <div class="divider fade-up"></div>
+
+  <!-- HOW I APPROACHED IT -->
+  <div class="fade-up">
+    <p class="section-label">How I approached it</p>
+    <p>I built an automated feedback pipeline that collected and classified reviews from four sources:</p>
+
+    <ul class="source-list">
+      <li><span class="source-dot"></span>App Store</li>
+      <li><span class="source-dot"></span>Play Store</li>
+      <li><span class="source-dot"></span>Trustpilot</li>
+      <li><span class="source-dot"></span>Social media</li>
+    </ul>
+
+    <p>The pipeline then processed each piece of feedback through four steps:</p>
+
+    <ul class="pipeline-steps">
+      <li><span class="step-num">01</span>Translated non-English feedback into English for consistent analysis</li>
+      <li><span class="step-num">02</span>Categorized issues into a custom taxonomy</li>
+      <li><span class="step-num">03</span>Scored sentiment and severity</li>
+      <li><span class="step-num">04</span>Pushed outputs into monthly reports and a self-serve Looker dashboard</li>
+    </ul>
+
+    <p>Instead of running another one-off study, I focused on building infrastructure the team could use continuously.</p>
+  </div>
+
+  <!-- Visual: Pipeline Architecture Diagram -->
+  <div class="fade-up" style="margin: 2rem 0;">
+    <img src="images/pipeline-architecture-diagram.png" alt="Pipeline Architecture Diagram showing Feedback Sources flowing through AI Classification Pipeline into Taxonomy and Sentiment Scoring, then into Reports and Looker Dashboard" style="width: 100%; border-radius: var(--radius-md); border: 0.5px solid var(--border);">
+  </div>
+
+  <div class="divider fade-up"></div>
+
+  <!-- WHAT I FOUND -->
+  <div class="fade-up">
+    <p class="section-label">What I found</p>
+    <p>Three patterns appeared consistently across every platform.</p>
+  </div>
+
+  <!-- FINDING 1 -->
+  <div class="fade-up">
+    <p class="finding-number">Finding 01</p>
+    <h2 class="finding-headline">The biggest frustrations happened after payment</h2>
+    <p>Users were not complaining about search.</p>
+    <p>They were complaining about refund delays, booking cancellations, and poor customer support.</p>
+    <p>The trust breakdown started after users paid.</p>
+  </div>
+
+  <div class="divider fade-up"></div>
+
+  <!-- FINDING 2 -->
+  <div class="fade-up">
+    <p class="finding-number">Finding 02</p>
+    <h2 class="finding-headline">Three issues caused nearly half of all flight-booking complaints</h2>
+    <p>The same problems kept appearing: delayed refunds, system cancellations, and unhelpful support.</p>
+  </div>
+
+  <div class="pattern-callout fade-up">
+    <p>User pays → something fails → support cannot resolve it.</p>
+    <p style="margin-top:0.5rem; font-size:0.88rem; color:var(--ink-muted); font-weight:300;">This was not a usability issue. It was an operational trust problem.</p>
+  </div>
+
+  <!-- Visual: Complaint Breakdown Chart -->
+  <div class="fade-up" style="margin: 2rem 0;">
+    <img src="images/complaint-breakdown-chart.png" alt="Complaint Breakdown Chart showing top complaint categories by volume: Refund delays, Booking cancellations, Poor support, and Price changes" style="width: 100%; border-radius: var(--radius-md); border: 0.5px solid var(--border);">
+  </div>
+
+  <div class="divider fade-up"></div>
+
+  <!-- FINDING 3 -->
+  <div class="fade-up">
+    <p class="finding-number">Finding 03</p>
+    <h2 class="finding-headline">The same complaints appeared everywhere</h2>
+    <p>App reviews, Trustpilot, and social media all surfaced the same issues.</p>
+    <p>That consistency mattered. It showed the problems were systemic, not isolated to a single channel.</p>
+  </div>
+
+  <div class="divider fade-up"></div>
+
+  <!-- WHAT CHANGED -->
+  <div class="fade-up">
+    <p class="section-label">What changed</p>
+    <p>The company went from having no structured feedback system to a recurring pipeline that surfaced categorized user issues every month.</p>
+    <p>The insights also triggered a dedicated leadership deep dive into app-rating problems, which informed roadmap discussions around refunds, cancellations, and post-booking support.</p>
+  </div>
+
+  <!-- Before / After table — the strongest visual in the case study -->
+  <div class="fade-up" style="margin-top: 1.75rem;">
+    <table class="before-after">
+      <thead>
+        <tr>
+          <th>Dimension</th>
+          <th>Before</th>
+          <th>After</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Analysis method</td>
+          <td class="col-before">Manual</td>
+          <td class="col-after">Automated pipeline</td>
+        </tr>
+        <tr>
+          <td>Time to insight</td>
+          <td class="col-before">2–3 weeks</td>
+          <td class="col-after">~1 week</td>
+        </tr>
+        <tr>
+          <td>People required</td>
+          <td class="col-before">2 people</td>
+          <td class="col-after">1 person</td>
+        </tr>
+        <tr>
+          <td>Output format</td>
+          <td class="col-before">Static reports</td>
+          <td class="col-after">Self-serve dashboard</td>
+        </tr>
+        <tr>
+          <td>Decision basis</td>
+          <td class="col-before">Gut feel</td>
+          <td class="col-after">Evidence-based prioritization</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="table-caption">Before vs. after comparison — this is the strongest visual in the case study. Replace with a designed version if available.</p>
+  </div>
+
+  <div class="divider fade-up"></div>
+
+  <!-- REFLECTION -->
+  <div class="reflection fade-up">
+    <p class="section-label">Reflection</p>
+    <p>If I did this again, I would build the automation much earlier.</p>
+    <p>I also learned that stakeholders stop reading recurring reports over time. The self-serve dashboard worked better because teams could pull insights when they actually needed them.</p>
+  </div>
+
+  <!-- NEXT CASE STUDY -->
+  <a href="case-study-wego-hotels.html" class="next-cs fade-up">
+    <div>
+      <p class="next-cs-label">Next case study</p>
+      <p class="next-cs-title">Building the Research Behind Wego's Hotel Booking Shift</p>
+    </div>
+    <svg class="next-cs-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </a>
+
+</article>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.07 });
+
+  document.querySelectorAll('.fade-up').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 35}ms`;
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>

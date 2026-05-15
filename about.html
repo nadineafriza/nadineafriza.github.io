@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Nadine Afriza</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink: #1c1c19;
+  --ink-muted: #54544f;
+  --ink-faint: #8a8a84;
+  --paper: #faf8f4;
+  --paper-warm: #f0ede6;
+  --paper-card: #ffffff;
+  --accent: #2d5a3d;
+  --accent-mid: #4a8a62;
+  --accent-faint: rgba(45,90,61,0.07);
+  --border: rgba(28,28,25,0.09);
+  --border-strong: rgba(28,28,25,0.16);
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'DM Sans', system-ui, sans-serif;
+  --max: 760px;
+  --max-wide: 1100px;
+  --gutter: clamp(1.5rem, 5vw, 3rem);
+  --radius-md: 12px;
+  --radius-lg: 20px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  font-size: 18px;
+  line-height: 1.75;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 0%, rgba(196,216,202,0.42) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 60% at 10% 100%, rgba(222,213,192,0.32) 0%, transparent 58%),
+    radial-gradient(ellipse 55% 50% at 92% 55%, rgba(196,216,202,0.22) 0%, transparent 52%);
+}
+body > * { position: relative; z-index: 1; }
+
+/* ── NAV ── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(250,248,244,0.93);
+  backdrop-filter: blur(14px);
+  border-bottom: 0.5px solid var(--border);
+  padding: 0 var(--gutter);
+}
+.nav-inner {
+  max-width: var(--max-wide);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 62px;
+}
+.nav-logo {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: var(--ink);
+  text-decoration: none;
+}
+.nav-links { display: flex; gap: 2.25rem; list-style: none; align-items: center; }
+.nav-links a {
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--ink-muted);
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  transition: color 0.15s;
+}
+.nav-links a:hover { color: var(--ink); }
+.nav-links a.active { color: var(--ink); }
+
+/* ── PAGE LAYOUT ── */
+.page {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: clamp(3.5rem, 8vw, 6rem) var(--gutter) clamp(4rem, 8vw, 7rem);
+}
+
+/* ── FADE IN ── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.fade-up.visible { opacity: 1; transform: none; }
+
+/* ── PAGE TITLE ── */
+.page-eyebrow {
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-mid);
+  margin-bottom: 1.1rem;
+}
+.page-title {
+  font-family: var(--serif);
+  font-size: clamp(2.4rem, 6vw, 3.6rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 0;
+}
+
+/* ── DIVIDER ── */
+.divider { height: 0.5px; background: var(--border); margin: 3rem 0; }
+.divider-sm { height: 0.5px; background: var(--border); margin: 2rem 0; }
+
+/* ── SECTION LABEL ── */
+.section-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 1.5rem;
+}
+
+/* ── PROSE ── */
+p {
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--ink-muted);
+  line-height: 1.85;
+  margin-bottom: 1.25rem;
+}
+p:last-child { margin-bottom: 0; }
+p strong { font-weight: 500; color: var(--ink); }
+p em { font-style: italic; color: var(--ink); }
+
+/* ── SUMMARY BLOCK ── */
+.summary-block p {
+  font-size: 1.08rem;
+  line-height: 1.85;
+}
+
+/* ── CAREER TRAJECTORY ── */
+.trajectory-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.traj-item {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 0;
+  border-bottom: 0.5px solid var(--border);
+}
+.traj-item:last-child { border-bottom: none; }
+.traj-company {
+  padding: 1.25rem 1.4rem;
+  border-right: 0.5px solid var(--border);
+  background: var(--paper-warm);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  justify-content: center;
+}
+.traj-name {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.3;
+}
+.traj-period {
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: var(--ink-faint);
+  letter-spacing: 0.02em;
+}
+.traj-detail {
+  padding: 1.25rem 1.5rem;
+  font-size: 0.92rem;
+  font-weight: 300;
+  color: var(--ink-muted);
+  line-height: 1.65;
+  display: flex;
+  align-items: center;
+}
+
+/* ── PHILOSOPHY BLOCK ── */
+.philosophy-block {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.phil-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.phil-lead {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.5;
+}
+.phil-body {
+  font-size: 0.97rem;
+  font-weight: 300;
+  color: var(--ink-muted);
+  line-height: 1.8;
+  padding-left: 1rem;
+  border-left: 2px solid var(--border);
+}
+
+/* ── HOW I WORK — 3 statement cards ── */
+.work-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.work-card {
+  padding: 1.4rem 1.75rem;
+  border-bottom: 0.5px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.work-card:last-child { border-bottom: none; }
+.work-card-lead {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.45;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.work-card-lead::before {
+  content: '';
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-mid);
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+.work-card-body {
+  font-size: 0.92rem;
+  font-weight: 300;
+  color: var(--ink-muted);
+  line-height: 1.7;
+  padding-left: 1.05rem;
+}
+
+/* ── CV DOWNLOAD BUTTON ── */
+.cv-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: var(--paper-card);
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 500;
+  padding: 0.8rem 1.6rem;
+  border-radius: 100px;
+  border: 0.5px solid var(--border-strong);
+  transition: background 0.15s, border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+  margin-top: 2rem;
+}
+.cv-btn:hover {
+  background: var(--paper-warm);
+  border-color: var(--border-strong);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(28,28,25,0.07);
+}
+.cv-btn svg { flex-shrink: 0; opacity: 0.6; }
+
+/* ── SEE WORK LINK ── */
+.see-work {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.75rem 2rem;
+  background: var(--paper-card);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  margin-top: 3rem;
+}
+.see-work:hover {
+  border-color: var(--border-strong);
+  box-shadow: 0 8px 32px rgba(28,28,25,0.07);
+  transform: translateY(-2px);
+}
+.see-work-label {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.35rem;
+}
+.see-work-title {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.35;
+}
+.see-work-arrow {
+  flex-shrink: 0;
+  color: var(--accent);
+  opacity: 0;
+  transition: opacity 0.18s, transform 0.18s;
+}
+.see-work:hover .see-work-arrow { opacity: 1; transform: translateX(4px); }
+
+/* ── FOOTER ── */
+footer {
+  border-top: 0.5px solid var(--border);
+  padding: 2.5rem var(--gutter);
+}
+.footer-inner {
+  max-width: var(--max-wide);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.footer-links { display: flex; gap: 1.75rem; align-items: center; flex-wrap: wrap; }
+.footer-links a { font-size: 0.9rem; color: var(--ink-muted); text-decoration: none; transition: color 0.15s; }
+.footer-links a:hover { color: var(--ink); }
+.footer-copy { font-size: 0.82rem; color: var(--ink-faint); }
+
+@media (max-width: 600px) {
+  .traj-item { grid-template-columns: 1fr; }
+  .traj-company {
+    border-right: none;
+    border-bottom: 0.5px solid var(--border);
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .nav-links { gap: 1.25rem; }
+  .footer-inner { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Nadine Afriza</a>
+    <ul class="nav-links">
+      <li><a href="index.html#work">Work</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="mailto:nadine.afriza@gmail.com">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page">
+
+  <!-- PAGE TITLE -->
+  <div class="fade-up">
+    <p class="page-eyebrow">About</p>
+    <h1 class="page-title">Nadine Afriza</h1>
+  </div>
+
+  <div class="divider fade-up"></div>
+
+  <!-- PROFESSIONAL SUMMARY -->
+  <div class="summary-block fade-up">
+    <p class="section-label">Professional summary</p>
+    <p>I'm a Senior UX Researcher with 6+ years across travel, e-commerce, and consulting.</p>
+    <p>My work combines behavioral data with qualitative research to help teams understand not just what users do, but why they do it.</p>
+    <p>Over time, my scope expanded from running studies to building research infrastructure: feedback pipelines, automated dashboards, repositories, and systems that help small teams scale research faster.</p>
+  </div>
+
+  <div class="divider fade-up"></div>
+
+  <!-- CAREER TRAJECTORY -->
+  <div class="fade-up">
+    <p class="section-label">Career trajectory</p>
+    <p style="margin-bottom:1.75rem;">I started in consulting, running usability tests and interviews across banking, telecom, and automotive projects. Later, I moved in-house to work closer to product decisions.</p>
+    <div class="trajectory-block">
+      <div class="traj-item">
+        <div class="traj-company">
+          <span class="traj-name">Wego</span>
+          <span class="traj-period">2023 – 2026</span>
+        </div>
+        <div class="traj-detail">Built the hotel research function from zero during the company's shift into direct hotel booking.</div>
+      </div>
+      <div class="traj-item">
+        <div class="traj-company">
+          <span class="traj-name">Blibli</span>
+          <span class="traj-period">2022 – 2023</span>
+        </div>
+        <div class="traj-detail">Built the company's first customer experience measurement system.</div>
+      </div>
+      <div class="traj-item">
+        <div class="traj-company">
+          <span class="traj-name">Aleph Labs</span>
+          <span class="traj-period">2020 – 2022</span>
+        </div>
+        <div class="traj-detail">Ran usability tests and interviews across banking, telecom, and automotive projects for enterprise clients.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider fade-up"></div>
+
+  <!-- HOW I THINK ABOUT RESEARCH -->
+  <div class="fade-up">
+    <p class="section-label">How I think about research</p>
+    <div class="philosophy-block">
+      <div class="phil-item">
+        <span class="phil-lead">I start with the data before I write a research plan.</span>
+        <span class="phil-body">What are users already struggling with? What does the business already know? What has already failed? The fastest way to waste research is solving the wrong problem.</span>
+      </div>
+      <div class="phil-item">
+        <span class="phil-lead">I care about whether findings can survive real product constraints.</span>
+        <span class="phil-body">Recommendations sound smart in slide decks all the time. That does not mean teams can build them. I try to understand technical limitations, business priorities, and roadmap realities before turning findings into recommendations.</span>
+      </div>
+      <div class="phil-item">
+        <span class="phil-lead">I do not think research only lives inside formal studies.</span>
+        <span class="phil-body">App reviews, support tickets, and social media often reveal product problems long before a team notices them internally. At Wego, I built a system that centralized and classified feedback across multiple channels so teams could see recurring issues continuously instead of waiting for quarterly research.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider fade-up"></div>
+
+  <!-- HOW I WORK WITH TEAMS -->
+  <div class="fade-up">
+    <p class="section-label">How I work with teams</p>
+    <div class="work-cards">
+      <div class="work-card">
+        <div class="work-card-lead">I adapt research to the audience.</div>
+        <div class="work-card-body">Leadership gets narratives and decision framing. PMs and designers get concrete examples, benchmarks, and clear next steps.</div>
+      </div>
+      <div class="work-card">
+        <div class="work-card-lead">I optimize for speed and clarity.</div>
+        <div class="work-card-body">If research takes too long to read, it does not get used. I keep outputs short, visual, and decision-focused.</div>
+      </div>
+      <div class="work-card">
+        <div class="work-card-lead">I stay close to the product.</div>
+        <div class="work-card-body">The best research happens when the researcher understands the team's constraints, priorities, and technical reality — not just the user problem.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CV DOWNLOAD -->
+  <div class="fade-up">
+    <a href="Nadine_Afriza_CV.pdf" class="cv-btn">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+        <path d="M7.5 2v8M7.5 10l-3-3M7.5 10l3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M2 12h11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+      Download CV — PDF
+    </a>
+  </div>
+
+  <!-- SEE WORK LINK -->
+  <a href="index.html#work" class="see-work fade-up">
+    <div>
+      <p class="see-work-label">Portfolio</p>
+      <p class="see-work-title">View case studies</p>
+    </div>
+    <svg class="see-work-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </a>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="mailto:nadine.afriza@gmail.com">nadine.afriza@gmail.com</a>
+      <a href="https://linkedin.com/in/nadineafz" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="Nadine_Afriza_CV.pdf">Download CV</a>
+    </div>
+    <span class="footer-copy">Nadine Afriza &copy; 2025</span>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.07 });
+
+  document.querySelectorAll('.fade-up').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 40}ms`;
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>

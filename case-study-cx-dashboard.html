@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CX Dashboard — Nadine Afriza</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink: #1c1c19;
+  --ink-muted: #54544f;
+  --ink-faint: #8a8a84;
+  --paper: #faf8f4;
+  --paper-warm: #f0ede6;
+  --paper-card: #ffffff;
+  --accent: #2d5a3d;
+  --accent-mid: #4a8a62;
+  --accent-faint: rgba(45,90,61,0.07);
+  --border: rgba(28,28,25,0.09);
+  --border-strong: rgba(28,28,25,0.16);
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'DM Sans', system-ui, sans-serif;
+  --max: 760px;
+  --max-wide: 1100px;
+  --gutter: clamp(1.5rem, 5vw, 3rem);
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --red-muted: #a03030;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  font-size: 18px;
+  line-height: 1.75;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 0%, rgba(196,216,202,0.42) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 60% at 10% 100%, rgba(222,213,192,0.32) 0%, transparent 58%),
+    radial-gradient(ellipse 55% 50% at 92% 55%, rgba(196,216,202,0.22) 0%, transparent 52%);
+}
+body > * { position: relative; z-index: 1; }
+
+/* ── NAV ── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(250,248,244,0.93);
+  backdrop-filter: blur(14px);
+  border-bottom: 0.5px solid var(--border);
+  padding: 0 var(--gutter);
+}
+.nav-inner {
+  max-width: var(--max-wide);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 62px;
+}
+.nav-logo {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: var(--ink);
+  text-decoration: none;
+}
+.nav-links { display: flex; gap: 2.25rem; list-style: none; align-items: center; }
+.nav-links a {
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--ink-muted);
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  transition: color 0.15s;
+}
+.nav-links a:hover { color: var(--ink); }
+.nav-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  color: var(--ink-muted);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.nav-back:hover { color: var(--ink); }
+
+/* ── ARTICLE ── */
+article {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: clamp(3.5rem, 8vw, 6rem) var(--gutter) clamp(4rem, 8vw, 7rem);
+}
+
+/* ── FADE IN ── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.fade-up.visible { opacity: 1; transform: none; }
+
+/* ── TITLE BLOCK ── */
+.cs-meta {
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-mid);
+  margin-bottom: 1.25rem;
+}
+.cs-title {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 600;
+  line-height: 1.18;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 1.25rem;
+}
+
+/* ── CONFIDENTIALITY ── */
+.confidentiality-note {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  font-size: 0.88rem;
+  font-weight: 400;
+  color: var(--ink-muted);
+  line-height: 1.55;
+  background: var(--paper-warm);
+  border: 0.5px solid var(--border-strong);
+  border-radius: 8px;
+  padding: 0.65rem 1rem;
+}
+
+/* ── DIVIDER ── */
+.divider { height: 0.5px; background: var(--border); margin: 3rem 0; }
+
+/* ── PROSE ── */
+p {
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--ink-muted);
+  line-height: 1.8;
+  margin-bottom: 1.25rem;
+}
+p:last-child { margin-bottom: 0; }
+p em { font-style: italic; color: var(--ink); }
+p strong { font-weight: 500; color: var(--ink); }
+
+/* ── SECTION LABEL ── */
+.section-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 1.5rem;
+}
+
+/* ── APPROACH CARDS ── */
+.approach-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-top: 1.5rem;
+}
+.approach-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.1rem;
+  padding: 1.1rem 1.4rem;
+  border-bottom: 0.5px solid var(--border);
+  background: var(--paper-card);
+}
+.approach-item:last-child { border-bottom: none; }
+.approach-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--accent-faint);
+  border: 0.5px solid rgba(45,90,61,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+.approach-icon svg { opacity: 0.55; }
+.approach-text { display: flex; flex-direction: column; gap: 0.2rem; }
+.approach-label {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-mid);
+}
+.approach-desc {
+  font-size: 0.92rem;
+  font-weight: 300;
+  color: var(--ink-muted);
+  line-height: 1.55;
+}
+
+/* ── FINDING HEADLINE ── */
+.finding-number {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.6rem;
+}
+.finding-headline {
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 3.5vw, 2.1rem);
+  font-weight: 600;
+  line-height: 1.22;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+}
+
+/* ── IMAGE PLACEHOLDER ── */
+.img-placeholder {
+  background: var(--paper-warm);
+  border: 1.5px dashed rgba(28,28,25,0.15);
+  border-radius: var(--radius-md);
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: center;
+  margin-top: 1.75rem;
+}
+.img-placeholder.medium { min-height: 220px; justify-content: center; }
+.img-placeholder .ph-label {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-mid);
+  background: rgba(45,90,61,0.08);
+  border: 0.5px solid rgba(45,90,61,0.2);
+  border-radius: 100px;
+  padding: 0.2rem 0.7rem;
+}
+.img-placeholder .ph-title {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.35;
+}
+.img-placeholder .ph-desc {
+  font-size: 0.83rem;
+  color: var(--ink-faint);
+  max-width: 420px;
+  line-height: 1.6;
+  font-weight: 300;
+}
+.img-placeholder svg { opacity: 0.18; }
+
+/* ── BEFORE / AFTER — two column ── */
+.before-after-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1.75rem;
+}
+.ba-col {
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.ba-col-head {
+  padding: 0.75rem 1.25rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-bottom: 0.5px solid var(--border);
+}
+.ba-col.before .ba-col-head {
+  background: rgba(160,48,48,0.06);
+  color: var(--red-muted);
+}
+.ba-col.after .ba-col-head {
+  background: var(--accent-faint);
+  color: var(--accent);
+}
+.ba-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.ba-col ul li {
+  padding: 0.7rem 1.25rem;
+  font-size: 0.88rem;
+  font-weight: 300;
+  line-height: 1.5;
+  border-bottom: 0.5px solid var(--border);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+.ba-col ul li:last-child { border-bottom: none; }
+.ba-col.before ul li { color: var(--red-muted); }
+.ba-col.after ul li { color: var(--accent); }
+.ba-marker {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 0.45rem;
+}
+.before .ba-marker { background: var(--red-muted); opacity: 0.5; }
+.after .ba-marker { background: var(--accent); opacity: 0.6; }
+.table-caption {
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+  margin-top: 0.75rem;
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+/* ── OUTCOME STATS ROW ── */
+.outcome-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1.75rem;
+}
+.stat-card {
+  background: var(--paper-card);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.4rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.stat-number {
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--accent);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.stat-label {
+  font-size: 0.83rem;
+  font-weight: 300;
+  color: var(--ink-muted);
+  line-height: 1.45;
+}
+
+/* ── PATTERN CALLOUT ── */
+.pattern-callout {
+  background: var(--paper-warm);
+  border-left: 2.5px solid var(--accent);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0 0;
+}
+.pattern-callout p {
+  font-size: 0.95rem;
+  color: var(--ink);
+  font-weight: 400;
+  margin: 0;
+  line-height: 1.65;
+}
+
+/* ── REFLECTION ── */
+.reflection {
+  background: var(--accent-faint);
+  border: 0.5px solid rgba(45,90,61,0.15);
+  border-radius: var(--radius-md);
+  padding: 1.75rem 2rem;
+}
+.reflection .section-label { margin-bottom: 0.75rem; }
+.reflection p { font-size: 0.95rem; color: var(--ink-muted); margin: 0; }
+.reflection p + p { margin-top: 0.85rem; }
+
+/* ── NEXT CASE STUDY ── */
+.next-cs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.75rem 2rem;
+  background: var(--paper-card);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  margin-top: 3rem;
+}
+.next-cs:hover {
+  border-color: var(--border-strong);
+  box-shadow: 0 8px 32px rgba(28,28,25,0.07);
+  transform: translateY(-2px);
+}
+.next-cs-label {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.4rem;
+}
+.next-cs-title {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.35;
+}
+.next-cs-arrow {
+  flex-shrink: 0;
+  color: var(--accent);
+  opacity: 0;
+  transition: opacity 0.18s, transform 0.18s;
+}
+.next-cs:hover .next-cs-arrow { opacity: 1; transform: translateX(4px); }
+
+@media (max-width: 600px) {
+  .before-after-2col { grid-template-columns: 1fr; }
+  .outcome-stats { grid-template-columns: 1fr; }
+  .nav-links { gap: 1.25rem; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Nadine Afriza</a>
+    <ul class="nav-links">
+      <li>
+        <a href="index.html#work" class="nav-back">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          All work
+        </a>
+      </li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="mailto:nadine.afriza@gmail.com">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<article>
+
+  <!-- TITLE -->
+  <div class="fade-up">
+    <p class="cs-meta">04 &nbsp;·&nbsp; Blibli &nbsp;·&nbsp; ResearchOps</p>
+    <h1 class="cs-title">Building a System That Turned 9,000 User Voices into Product Decisions</h1>
+    <p class="confidentiality-note">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true" style="flex-shrink:0; margin-top:1px;">
+        <rect x="2" y="5.5" width="9" height="6.5" rx="1.5" stroke="currentColor" stroke-width="1.2"/>
+        <path d="M4 5.5V4a2.5 2.5 0 0 1 5 0v1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+      </svg>
+      Some details have been intentionally generalized or omitted due to confidentiality.
+    </p>
+  </div>
+
+  <div class="divider fade-up"></div>
+
+  <!-- OPENING CONTEXT -->
+  <div class="fade-up">
+    <p class="section-label">Opening context</p>
+    <p>Blibli collected thousands of customer feedback responses every quarter.</p>
+    <p>But the analysis was manual.</p>
+    <p>Researchers spent weeks reading comments in Excel before product teams could use the findings.</p>
+    <p>The system could not keep up with the scale.</p>
+  </div>
+
+  <div class="divider fade-up"></div>
+
+  <!-- RESEARCH QUESTION -->
+  <div class="fade-up">
+    <p class="section-label">The research question</p>
+    <p>How do we turn thousands of scattered complaints into something product teams can actually use fast enough to influence decisions?</p>
+  </div>
+
+  <div class="divider fade-up"></div>
+
+  <!-- HOW I APPROACHED IT -->
+  <div class="fade-up">
+    <p class="section-label">How I approached it</p>
+    <div class="approach-grid">
+      <div class="approach-item">
+        <div class="approach-icon">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <rect x="2" y="2" width="12" height="12" rx="2" stroke="#2d5a3d" stroke-width="1.3"/>
+            <path d="M5 8h6M5 5.5h6M5 10.5h4" stroke="#2d5a3d" stroke-width="1.1" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="approach-text">
+          <span class="approach-label">Survey</span>
+          <span class="approach-desc">59-question customer experience survey covering the full shopping journey — search, checkout, payment, shipping, and account management</span>
+        </div>
+      </div>
+      <div class="approach-item">
+        <div class="approach-icon">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <circle cx="8" cy="8" r="5.5" stroke="#2d5a3d" stroke-width="1.3"/>
+            <path d="M5.5 8l2 2 3-3" stroke="#2d5a3d" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="approach-text">
+          <span class="approach-label">Automation</span>
+          <span class="approach-desc">Automated feedback classification using Qualtrics TextIQ instead of manual Excel tagging</span>
+        </div>
+      </div>
+      <div class="approach-item">
+        <div class="approach-icon">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <rect x="2" y="4" width="12" height="9" rx="1.5" stroke="#2d5a3d" stroke-width="1.3"/>
+            <path d="M5 7.5h2M5 9.5h4" stroke="#2d5a3d" stroke-width="1.1" stroke-linecap="round"/>
+            <path d="M10 7l1.5 1.5L10 10" stroke="#2d5a3d" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="approach-text">
+          <span class="approach-label">Self-service dashboard</span>
+          <span class="approach-desc">Product teams could explore pain points without waiting for research reports</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider fade-up"></div>
+
+  <!-- WHAT I FOUND -->
+  <div class="fade-up">
+    <p class="section-label">What I found</p>
+  </div>
+
+  <!-- FINDING 1 -->
+  <div class="fade-up">
+    <p class="finding-number">Finding 01</p>
+    <h2 class="finding-headline">The old survey measured satisfaction, but not specific problems</h2>
+    <p>The existing usability score could show when satisfaction dropped.</p>
+    <p>But it could not explain why.</p>
+    <p>The new system measured problems by journey: search, checkout, payment, shipping, and account management.</p>
+  </div>
+
+  <!-- Visual: Before vs After system comparison — 2-column layout as flagged -->
+  <div class="before-after-2col fade-up">
+    <div class="ba-col before">
+      <div class="ba-col-head">Old system</div>
+      <ul>
+        <li><span class="ba-marker"></span>Overall satisfaction score only</li>
+        <li><span class="ba-marker"></span>Generic, untagged comments</li>
+        <li><span class="ba-marker"></span>Hard to act on</li>
+      </ul>
+    </div>
+    <div class="ba-col after">
+      <div class="ba-col-head">New system</div>
+      <ul>
+        <li><span class="ba-marker"></span>Journey-level tracking</li>
+        <li><span class="ba-marker"></span>Specific, classified pain points</li>
+        <li><span class="ba-marker"></span>Actionable by squads</li>
+      </ul>
+    </div>
+  </div>
+  <p class="table-caption fade-up">Old vs. new system comparison — replaces the before/after description above</p>
+
+  <div class="divider fade-up"></div>
+
+  <!-- FINDING 2 -->
+  <div class="fade-up">
+    <p class="finding-number">Finding 02</p>
+    <h2 class="finding-headline">Search complaints were really trust complaints</h2>
+    <p>Users were not mainly frustrated by speed or layout.</p>
+    <p>They were frustrated because search results felt unreliable and seller verification was unclear.</p>
+    <p>The issue was trust, not usability.</p>
+  </div>
+
+  <!-- Visual: Horizontal bar chart of top search complaints -->
+  <div class="fade-up">
+    <img src="images/search-complaint-bar-chart.png" alt="Top search complaint categories — horizontal bar chart showing top search complaints by volume, with Inaccurate results and Unclear verified sellers as the top two categories" style="width: 100%; border-radius: var(--radius-md); border: 0.5px solid var(--border);">
+  </div>
+
+  <div class="divider fade-up"></div>
+
+  <!-- FINDING 3 -->
+  <div class="fade-up">
+    <p class="finding-number">Finding 03</p>
+    <h2 class="finding-headline">The same problems kept repeating every quarter</h2>
+    <p>The dashboard revealed that many top complaints kept returning quarter after quarter.</p>
+    <p>The company did not lack feedback. It lacked visibility and ownership.</p>
+  </div>
+
+  <!-- Visual: Recurring vs New issue tracker -->
+  <div class="fade-up">
+    <img src="images/recurring-vs-new-issue-tracker.png" alt="Recurring vs. New issue tracker — visual tracker showing complaints across quarters, with recurring issues and new issues distinguished by colour" style="width: 100%; border-radius: var(--radius-md); border: 0.5px solid var(--border);">
+  </div>
+
+  <div class="divider fade-up"></div>
+
+  <!-- WHAT CHANGED -->
+  <div class="fade-up">
+    <p class="section-label">What changed</p>
+    <p>Research stopped being a quarterly report. It became an operational system.</p>
+  </div>
+
+  <!-- Outcome stats -->
+  <div class="outcome-stats fade-up">
+    <div class="stat-card">
+      <span class="stat-number">↓ 50%</span>
+      <span class="stat-label">Reporting time dropped from 3–4 weeks to 1–2 weeks</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-number">1 source</span>
+      <span class="stat-label">Dashboard adopted as the company-wide source of truth for customer satisfaction</span>
+    </div>
+  </div>
+
+  <!-- What changed — before/after operational comparison as flagged -->
+  <div class="before-after-2col fade-up" style="margin-top: 1rem;">
+    <div class="ba-col before">
+      <div class="ba-col-head">Before</div>
+      <ul>
+        <li><span class="ba-marker"></span>Manual Excel analysis</li>
+        <li><span class="ba-marker"></span>Static decks</li>
+        <li><span class="ba-marker"></span>No ownership of follow-through</li>
+      </ul>
+    </div>
+    <div class="ba-col after">
+      <div class="ba-col-head">After</div>
+      <ul>
+        <li><span class="ba-marker"></span>Automated classification</li>
+        <li><span class="ba-marker"></span>Self-serve dashboard</li>
+        <li><span class="ba-marker"></span>Jira-tracked action items</li>
+      </ul>
+    </div>
+  </div>
+  <p class="table-caption fade-up">Before vs. after operational comparison — replaces process description above</p>
+
+  <div class="fade-up" style="margin-top: 1.75rem;">
+    <p>Research findings were turned into Jira-tracked action items through cross-functional workshops, creating a direct line from user complaint to product decision.</p>
+  </div>
+
+  <div class="divider fade-up"></div>
+
+  <!-- REFLECTION -->
+  <div class="reflection fade-up">
+    <p class="section-label">Reflection</p>
+    <p>If I ran this again, I would build stronger accountability tracking into the workflow from the start.</p>
+    <p>The system solved visibility. The next version should also solve follow-through.</p>
+  </div>
+
+  <!-- NEXT CASE STUDY -->
+  <a href="case-study-bsi.html" class="next-cs fade-up">
+    <div>
+      <p class="next-cs-label">Next case study</p>
+      <p class="next-cs-title">Mapping What Users Actually Need from a Banking App Built for Three Banks, Three Goals, and One Faith</p>
+    </div>
+    <svg class="next-cs-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </a>
+
+</article>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.07 });
+
+  document.querySelectorAll('.fade-up').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 35}ms`;
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>

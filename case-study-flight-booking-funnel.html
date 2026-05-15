@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flight Checkout — Nadine Afriza</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink: #1c1c19;
+  --ink-muted: #54544f;
+  --ink-faint: #8a8a84;
+  --paper: #faf8f4;
+  --paper-warm: #f0ede6;
+  --paper-card: #ffffff;
+  --accent: #2d5a3d;
+  --accent-mid: #4a8a62;
+  --accent-faint: rgba(45,90,61,0.07);
+  --border: rgba(28,28,25,0.09);
+  --border-strong: rgba(28,28,25,0.16);
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'DM Sans', system-ui, sans-serif;
+  --max: 760px;
+  --max-wide: 1100px;
+  --gutter: clamp(1.5rem, 5vw, 3rem);
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --red-muted: #a03030;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  font-size: 18px;
+  line-height: 1.75;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 0%, rgba(196,216,202,0.42) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 60% at 10% 100%, rgba(222,213,192,0.32) 0%, transparent 58%),
+    radial-gradient(ellipse 55% 50% at 92% 55%, rgba(196,216,202,0.22) 0%, transparent 52%);
+}
+body > * { position: relative; z-index: 1; }
+
+/* ── NAV ── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(250,248,244,0.93);
+  backdrop-filter: blur(14px);
+  border-bottom: 0.5px solid var(--border);
+  padding: 0 var(--gutter);
+}
+.nav-inner {
+  max-width: var(--max-wide);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 62px;
+}
+.nav-logo {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: var(--ink);
+  text-decoration: none;
+}
+.nav-links { display: flex; gap: 2.25rem; list-style: none; align-items: center; }
+.nav-links a {
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--ink-muted);
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  transition: color 0.15s;
+}
+.nav-links a:hover { color: var(--ink); }
+.nav-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  color: var(--ink-muted);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.nav-back:hover { color: var(--ink); }
+
+/* ── ARTICLE ── */
+article {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: clamp(3.5rem, 8vw, 6rem) var(--gutter) clamp(4rem, 8vw, 7rem);
+}
+
+/* ── FADE IN ── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.fade-up.visible { opacity: 1; transform: none; }
+
+/* ── TITLE BLOCK ── */
+.cs-meta {
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-mid);
+  margin-bottom: 1.25rem;
+}
+.cs-title {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 600;
+  line-height: 1.18;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 1.25rem;
+}
+
+/* ── CONFIDENTIALITY ── */
+.confidentiality-note {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  font-size: 0.88rem;
+  font-weight: 400;
+  color: var(--ink-muted);
+  line-height: 1.55;
+  background: var(--paper-warm);
+  border: 0.5px solid var(--border-strong);
+  border-radius: 8px;
+  padding: 0.65rem 1rem;
+}
+
+/* ── DIVIDER ── */
+.divider { height: 0.5px; background: var(--border); margin: 3rem 0; }
+
+/* ── PROSE ── */
+p {
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--ink-muted);
+  line-height: 1.8;
+  margin-bottom: 1.25rem;
+}
+p:last-child { margin-bottom: 0; }
+p em { font-style: italic; color: var(--ink); }
+p strong { font-weight: 500; color: var(--ink); }
+
+/* ── SECTION LABEL ── */
+.section-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 1.5rem;
+}
+
+/* ── FINDING ── */
+.finding-number {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.6rem;
+}
+.finding-headline {
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 3.5vw, 2.1rem);
+  font-weight: 600;
+  line-height: 1.22;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+}
+
+/* ── METHOD TABLE ── */
+.method-table-wrap {
+  border-radius: var(--radius-md);
+  border: 0.5px solid var(--border);
+  overflow: hidden;
+  margin-top: 1.5rem;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+thead th {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  padding: 0.9rem 1.25rem;
+  text-align: left;
+  background: var(--paper-warm);
+  border-bottom: 0.5px solid var(--border);
+}
+tbody td {
+  padding: 0.85rem 1.25rem;
+  color: var(--ink-muted);
+  font-weight: 300;
+  border-bottom: 0.5px solid var(--border);
+  vertical-align: top;
+  line-height: 1.55;
+}
+tbody tr:last-child td { border-bottom: none; }
+tbody td:first-child { color: var(--ink); font-weight: 400; }
+
+/* ── IMAGE PLACEHOLDER ── */
+.img-placeholder {
+  background: var(--paper-warm);
+  border: 1.5px dashed rgba(28,28,25,0.15);
+  border-radius: var(--radius-md);
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: center;
+  margin-top: 1.75rem;
+}
+.img-placeholder.tall { min-height: 300px; justify-content: center; }
+.img-placeholder.medium { min-height: 220px; justify-content: center; }
+.img-placeholder .ph-label {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-mid);
+  background: rgba(45,90,61,0.08);
+  border: 0.5px solid rgba(45,90,61,0.2);
+  border-radius: 100px;
+  padding: 0.2rem 0.7rem;
+}
+.img-placeholder .ph-title {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.35;
+}
+.img-placeholder .ph-desc {
+  font-size: 0.83rem;
+  color: var(--ink-faint);
+  max-width: 420px;
+  line-height: 1.6;
+  font-weight: 300;
+}
+.img-placeholder svg { opacity: 0.18; }
+
+/* ── TRUST GAP TABLE ── */
+.trust-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  font-size: 0.92rem;
+  margin-top: 1.75rem;
+}
+.trust-table thead th {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.85rem 1.25rem;
+  background: var(--paper-warm);
+  border-bottom: 0.5px solid var(--border);
+  text-align: left;
+}
+.trust-table thead th:nth-child(1) { color: var(--ink-faint); }
+.trust-table thead th:nth-child(2) { color: var(--accent); }
+.trust-table thead th:nth-child(3) { color: var(--red-muted); }
+.trust-table tbody td {
+  padding: 0.8rem 1.25rem;
+  border-bottom: 0.5px solid var(--border);
+  line-height: 1.5;
+  font-weight: 300;
+  vertical-align: middle;
+}
+.trust-table tbody tr:last-child td { border-bottom: none; }
+.trust-table tbody td:first-child { color: var(--ink); font-weight: 400; font-size: 0.85rem; }
+.col-before { color: var(--accent); font-weight: 400; }
+.col-after  { color: var(--red-muted); font-weight: 400; }
+
+/* ── COMPETITOR TABLE ── */
+.comp-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  font-size: 0.9rem;
+  margin-top: 1.75rem;
+}
+.comp-table thead th {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  padding: 0.85rem 1.25rem;
+  background: var(--paper-warm);
+  border-bottom: 0.5px solid var(--border);
+  text-align: left;
+}
+.comp-table tbody td {
+  padding: 0.8rem 1.25rem;
+  border-bottom: 0.5px solid var(--border);
+  line-height: 1.5;
+  font-weight: 300;
+  vertical-align: middle;
+}
+.comp-table tbody tr:last-child td { border-bottom: none; }
+.comp-table tbody td:first-child { color: var(--ink); font-weight: 400; }
+.comp-weak   { color: var(--red-muted); font-weight: 400; }
+.comp-strong { color: var(--accent); font-weight: 400; }
+
+/* ── OUTCOME TABLE ── */
+.outcome-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  font-size: 0.9rem;
+  margin-top: 1.75rem;
+}
+.outcome-table thead th {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  padding: 0.85rem 1.25rem;
+  background: var(--paper-warm);
+  border-bottom: 0.5px solid var(--border);
+  text-align: left;
+}
+.outcome-table tbody td {
+  padding: 0.85rem 1.25rem;
+  border-bottom: 0.5px solid var(--border);
+  line-height: 1.55;
+  font-weight: 300;
+  color: var(--ink-muted);
+  vertical-align: top;
+}
+.outcome-table tbody tr:last-child td { border-bottom: none; }
+.outcome-table tbody td:first-child { color: var(--ink); font-weight: 400; }
+.outcome-trigger { color: var(--accent); font-weight: 400; }
+
+/* ── REFLECTION ── */
+.reflection {
+  background: var(--accent-faint);
+  border: 0.5px solid rgba(45,90,61,0.15);
+  border-radius: var(--radius-md);
+  padding: 1.75rem 2rem;
+}
+.reflection .section-label { margin-bottom: 0.75rem; }
+.reflection p { font-size: 0.95rem; color: var(--ink-muted); margin: 0; }
+.reflection p + p { margin-top: 0.85rem; }
+
+/* ── NEXT CASE STUDY ── */
+.next-cs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.75rem 2rem;
+  background: var(--paper-card);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  margin-top: 3rem;
+}
+.next-cs:hover {
+  border-color: var(--border-strong);
+  box-shadow: 0 8px 32px rgba(28,28,25,0.07);
+  transform: translateY(-2px);
+}
+.next-cs-label {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.4rem;
+}
+.next-cs-title {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.35;
+}
+.next-cs-arrow {
+  flex-shrink: 0;
+  color: var(--accent);
+  opacity: 0;
+  transition: opacity 0.18s, transform 0.18s;
+}
+.next-cs:hover .next-cs-arrow { opacity: 1; transform: translateX(4px); }
+
+@media (max-width: 600px) {
+  .nav-links { gap: 1.25rem; }
+  .img-placeholder.tall { min-height: 200px; }
+}
+
+/* Real case study images */
+.case-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius-md);
+  border: 0.5px solid var(--border);
+}
+
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Nadine Afriza</a>
+    <ul class="nav-links">
+      <li>
+        <a href="index.html#work" class="nav-back">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          All work
+        </a>
+      </li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="mailto:nadine.afriza@gmail.com">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<article>
+
+  <!-- TITLE -->
+  <div class="fade-up">
+    <p class="cs-meta">01 &nbsp;·&nbsp; Wego &nbsp;·&nbsp; Flight Booking</p>
+    <h1 class="cs-title">Diagnosing Why Flight Bookings Stalled at Checkout</h1>
+    <p class="confidentiality-note">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true" style="flex-shrink:0; margin-top:1px;">
+        <rect x="2" y="5.5" width="9" height="6.5" rx="1.5" stroke="currentColor" stroke-width="1.2"/>
+        <path d="M4 5.5V4a2.5 2.5 0 0 1 5 0v1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+      </svg>
+      Some details have been intentionally generalized or omitted due to confidentiality.
+    </p>
+  </div>
+
+  <div class="divider fade-up"></div>
+
+  <!-- OPENING CONTEXT -->
+  <div class="fade-up">
+    <p class="section-label">Opening context</p>
+    <p>Wego is a travel search and booking platform used across the Middle East and Asia.</p>
+    <p>Users were searching for flights and choosing options. But many dropped off before completing payment.</p>
+    <p>The funnel showed where users left. It could not explain why.</p>
+  </div>
+
+  <div class="divider fade-up"></div>
+
+  <!-- RESEARCH QUESTION -->
+  <div class="fade-up">
+    <p class="section-label">The research question</p>
+    <p>I focused on two questions:</p>
+    <ol style="padding-left:1.25rem; margin-top:0.75rem; display:flex; flex-direction:column; gap:0.5rem;">
+      <li style="font-size:1rem; font-weight:300; color:var(--ink-muted); line-height:1.7;">Where were users getting stuck inside checkout?</li>
+      <li style="font-size:1rem; font-weight:300; color:var(--ink-muted); line-height:1.7;">Why did users trust Wego to search, but still book elsewhere?</li>
+    </ol>
+  </div>
+
+  <div class="divider fade-up"></div>
+
+  <!-- HOW I INVESTIGATED IT -->
+  <div class="fade-up">
+    <p class="section-label">How I investigated it</p>
+    <div class="method-table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Goal</th>
+            <th>Methods</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Find checkout friction</td>
+            <td>Heatmaps, session recordings</td>
+          </tr>
+          <tr>
+            <td>Understand abandonment</td>
+            <td>Survey (250 users), rapid user calls</td>
+          </tr>
+          <tr>
+            <td>Compare against expectations</td>
+            <td>Competitive benchmarking, analytics, user reviews</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="divider fade-up"></div>
+
+  <!-- WHAT I FOUND -->
+  <div class="fade-up">
+    <p class="section-label">What I found</p>
+  </div>
+
+  <!-- FINDING 1 -->
+  <div class="fade-up">
+    <p class="finding-number">Finding 01</p>
+    <h2 class="finding-headline">Users lost control inside checkout.</h2>
+    <p>Several interactions behaved differently from what users expected.</p>
+    <p>Users got stuck at the insurance step because they did not realize a selection was mandatory. Others tried to go back and edit earlier steps, but the flow locked them in. After booking, many rage-clicked the confirmation page trying to download proof of purchase.</p>
+    <p>The friction was consistent across English and Arabic users.</p>
+  </div>
+
+
+  <!-- Visual artifact 1 -->
+  <div class="fade-up">
+    <img
+      src="images/annotated-checkout-flow.png"
+      alt="Annotated checkout flow showing three friction points: locked navigation steps, mandatory insurance selection, and rage clicks on the booking confirmation page"
+      class="case-img"
+    >
+  </div>
+
+
+  <div class="divider fade-up"></div>
+
+  <!-- FINDING 2 -->
+  <div class="fade-up">
+    <p class="finding-number">Finding 02</p>
+    <h2 class="finding-headline">Users trusted Wego before payment. Not after it.</h2>
+    <p>Price was the biggest reason users came to Wego. It was also the biggest reason they left.</p>
+    <p>Users described prices changing during checkout, unexpected fees appearing late, uncertainty around refunds and cancellations, and difficulty getting support after payment.</p>
+    <p>The issue was bigger than pricing. Users did not feel confident about what would happen once money was involved.</p>
+  </div>
+
+  <!-- Visual artifact 2: Before / After payment table — converted from markdown -->
+  <table class="trust-table fade-up">
+    <thead>
+      <tr>
+        <th>Experience</th>
+        <th>Before payment</th>
+        <th>After payment</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Prices</td>
+        <td class="col-before">Good prices</td>
+        <td class="col-after">Refund anxiety</td>
+      </tr>
+      <tr>
+        <td>Search</td>
+        <td class="col-before">Smooth search</td>
+        <td class="col-after">Support frustration</td>
+      </tr>
+      <tr>
+        <td>Booking</td>
+        <td class="col-before">Easy booking</td>
+        <td class="col-after">Cancellation confusion</td>
+      </tr>
+      <tr>
+        <td>Trust</td>
+        <td class="col-before">Trusted comparison</td>
+        <td class="col-after">Pricing uncertainty</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="divider fade-up"></div>
+
+  <!-- FINDING 3 -->
+  <div class="fade-up">
+    <p class="finding-number">Finding 03</p>
+    <h2 class="finding-headline">Competitors already solved many of these trust problems.</h2>
+    <p>Other travel platforms offered clearer pricing, more flexible cancellations, and stronger post-booking reassurance.</p>
+    <p>Wego performed well at helping users search. The confidence dropped after checkout began.</p>
+  </div>
+
+  <!-- Visual artifact 3: Competitor comparison -->
+  <table class="comp-table fade-up">
+    <thead>
+      <tr>
+        <th>Experience</th>
+        <th>Wego</th>
+        <th>Competitors</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Pricing transparency</td>
+        <td class="comp-weak">Partial</td>
+        <td class="comp-strong">Strong</td>
+      </tr>
+      <tr>
+        <td>Cancellation flexibility</td>
+        <td class="comp-weak">Limited</td>
+        <td class="comp-strong">Common</td>
+      </tr>
+      <tr>
+        <td>Post-booking support</td>
+        <td class="comp-weak">Weak</td>
+        <td class="comp-strong">Strong</td>
+      </tr>
+      <tr>
+        <td>Payment flexibility</td>
+        <td class="comp-weak">Limited</td>
+        <td class="comp-strong">Common</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="divider fade-up"></div>
+
+  <!-- WHAT CHANGED -->
+  <div class="fade-up">
+    <p class="section-label">What changed</p>
+  </div>
+
+  <div class="fade-up">
+    <table class="outcome-table">
+      <thead>
+        <tr>
+          <th>Product change</th>
+          <th>Triggered by</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Insurance step redesigned</td>
+          <td class="outcome-trigger">Rage click analysis</td>
+        </tr>
+        <tr>
+          <td>Checkout flow made editable</td>
+          <td class="outcome-trigger">Navigation friction findings</td>
+        </tr>
+        <tr>
+          <td>Self-service cancellation prioritized</td>
+          <td class="outcome-trigger">Survey + user feedback</td>
+        </tr>
+        <tr>
+          <td>Pricing transparency became strategic focus</td>
+          <td class="outcome-trigger">Funnel abandonment research</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="divider fade-up"></div>
+
+  <!-- REFLECTION -->
+  <div class="reflection fade-up">
+    <p class="section-label">Reflection</p>
+    <p>If I did this again, I would add an intercept survey at key checkout drop-off points to capture what users felt and intended in the moment.</p>
+    <p>This would help connect observed behavior from session recordings with users' actual reasons for leaving — and I raised this with the PM as a potential next step.</p>
+  </div>
+
+  <!-- NEXT CASE STUDY -->
+  <a href="case-study-wego-hotels.html" class="next-cs fade-up">
+    <div>
+      <p class="next-cs-label">Next case study</p>
+      <p class="next-cs-title">Building the Research Foundation for Wego's Shift into Hotel Booking</p>
+    </div>
+    <svg class="next-cs-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </a>
+
+</article>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.07 });
+
+  document.querySelectorAll('.fade-up').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 35}ms`;
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
