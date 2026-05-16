@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nadine Afriza — Senior UX Researcher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink: #1c1c19;
+  --ink-muted: #54544f;
+  --ink-faint: #8a8a84;
+  --paper: #faf8f4;
+  --paper-warm: #f0ede6;
+  --paper-card: #ffffff;
+  --accent: #2d5a3d;
+  --accent-mid: #4a8a62;
+  --border: rgba(28,28,25,0.09);
+  --border-strong: rgba(28,28,25,0.16);
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'DM Sans', system-ui, sans-serif;
+  --max: 1100px;
+  --gutter: clamp(1.5rem, 5vw, 3rem);
+  --radius-md: 12px;
+  --radius-lg: 20px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Persistent gradient — fixed to viewport, visible throughout scroll */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 0%, rgba(196,216,202,0.42) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 60% at 10% 100%, rgba(222,213,192,0.32) 0%, transparent 58%),
+    radial-gradient(ellipse 55% 50% at 92% 55%, rgba(196,216,202,0.22) 0%, transparent 52%);
+}
+body > * { position: relative; z-index: 1; }
+
+/* ── NAV ── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(250,248,244,0.93);
+  backdrop-filter: blur(14px);
+  border-bottom: 0.5px solid var(--border);
+  padding: 0 var(--gutter);
+}
+.nav-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 62px;
+}
+.nav-logo {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 300;
+  color: var(--ink);
+  text-decoration: none;
+}
+.nav-links { display: flex; gap: 2.25rem; list-style: none; }
+.nav-links a {
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--ink-muted);
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  transition: color 0.15s;
+}
+.nav-links a:hover { color: var(--ink); }
+
+/* ── HERO ── */
+.hero-wrap {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animated dots canvas — positioned in hero, right-biased */
+#hero-dots {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.55;
+}
+
+.hero {
+  position: relative;
+  z-index: 1;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: clamp(5rem, 12vw, 9rem) var(--gutter) clamp(4rem, 7vw, 6.5rem);
+}
+
+/* Hero fade-in on load + re-entry — handled by JS adding .hero-visible */
+.hero-eyebrow,
+.hero-name,
+.hero-title,
+.hero-positioning,
+.cta-btn {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.hero-visible .hero-eyebrow  { opacity: 1; transform: none; transition-delay: 0.05s; }
+.hero-visible .hero-name      { opacity: 1; transform: none; transition-delay: 0.15s; }
+.hero-visible .hero-title     { opacity: 1; transform: none; transition-delay: 0.25s; }
+.hero-visible .hero-positioning{ opacity: 1; transform: none; transition-delay: 0.35s; }
+.hero-visible .cta-btn        { opacity: 1; transform: none; transition-delay: 0.45s; }
+
+.hero-eyebrow {
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-mid);
+  margin-bottom: 1.4rem;
+}
+.hero-name {
+  font-family: var(--serif);
+  font-size: clamp(3.4rem, 8.5vw, 6.2rem);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 0.25em;
+}
+.hero-title {
+  font-size: clamp(1.05rem, 2vw, 1.2rem);
+  font-weight: 300;
+  color: var(--ink-muted);
+  letter-spacing: 0.01em;
+  margin-bottom: 2.25rem;
+}
+.hero-positioning {
+  font-size: clamp(1rem, 1.8vw, 1.1rem);
+  font-weight: 300;
+  color: var(--ink-muted);
+  max-width: 620px;
+  line-height: 1.8;
+  margin-bottom: 2.75rem;
+}
+.hero-positioning strong { color: var(--ink); font-weight: 400; }
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.97rem;
+  font-weight: 500;
+  padding: 0.8rem 1.75rem;
+  border-radius: 100px;
+  transition: background 0.18s, transform 0.15s, opacity 0.65s ease;
+}
+.cta-btn:hover { background: #234830; transform: translateY(-1px); }
+.cta-btn svg { transition: transform 0.15s; }
+.cta-btn:hover svg { transform: translateX(3px); }
+
+/* ── SECTION LABELS ── */
+.section-label {
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 2rem;
+}
+
+/* ── FEATURED — energetic, denser ── */
+.featured {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: clamp(2.5rem, 4vw, 3.5rem) var(--gutter);
+  border-top: 0.5px solid var(--border);
+}
+.case-grid { display: flex; flex-direction: column; gap: 2rem; }
+.secondary-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.875rem; }
+
+/* ── BASE CARD ── */
+.case-card {
+  background: var(--paper-card);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.2s;
+}
+/* Scroll fade-in */
+.case-card, .add-card {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.55s ease, transform 0.55s ease, box-shadow 0.22s ease, border-color 0.2s;
+}
+.case-card.visible, .add-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.case-card:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 20px 56px rgba(28,28,25,0.09);
+  border-color: var(--border-strong);
+}
+
+/* Annotation inner ring */
+.case-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-lg);
+  box-shadow: inset 0 0 0 1.5px rgba(45,90,61,0);
+  transition: box-shadow 0.3s ease;
+  pointer-events: none;
+}
+.case-card:hover::after { box-shadow: inset 0 0 0 1.5px rgba(45,90,61,0.14); }
+
+/* Annotation callout pill */
+.card-annotation {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: rgba(234,242,237,0.94);
+  border: 0.5px solid rgba(45,90,61,0.22);
+  border-radius: 100px;
+  padding: 0.22rem 0.65rem 0.22rem 0.5rem;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.22s ease, transform 0.22s ease;
+  pointer-events: none;
+  backdrop-filter: blur(6px);
+  z-index: 2;
+}
+.case-card:hover .card-annotation { opacity: 1; transform: translateY(0); }
+.card-annotation::before {
+  content: '';
+  display: block;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+/* Visual block */
+.card-visual {
+  background: var(--paper-warm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 100%;
+  position: relative;
+}
+.case-card.large .card-visual { height: 400px; }
+.case-card.small .card-visual { height: 260px; }
+
+.card-visual::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  height: 2px;
+  width: 0%;
+  background: linear-gradient(90deg, rgba(45,90,61,0.5) 0%, transparent 100%);
+  transition: width 0.45s ease;
+}
+.case-card:hover .card-visual::after { width: 45%; }
+
+.visual-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  text-align: center;
+  padding: 2rem;
+}
+.visual-placeholder svg { opacity: 0.2; }
+.visual-placeholder span {
+  font-size: 0.76rem;
+  color: var(--ink-faint);
+  max-width: 220px;
+  line-height: 1.55;
+  letter-spacing: 0.01em;
+}
+
+/* Card body */
+.card-body {
+  display: flex;
+  flex-direction: column;
+  padding: 1.75rem 2rem;
+  flex: 1;
+}
+.case-card.small .card-body { padding: 1.4rem 1.6rem; }
+
+.card-number {
+  font-size: 0.73rem;
+  font-weight: 500;
+  color: var(--ink-faint);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.7rem;
+}
+
+/* Playfair Display titles — proper tracking for serif readability */
+.case-card.large .card-title {
+  font-family: var(--serif);
+  font-size: clamp(1.25rem, 2vw, 1.55rem);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--ink);
+  letter-spacing: 0.01em;
+  margin-bottom: 0.7rem;
+}
+.case-card.small .card-title {
+  font-family: var(--serif);
+  font-size: clamp(1rem, 1.4vw, 1.18rem);
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--ink);
+  letter-spacing: 0.01em;
+  margin-bottom: 0.6rem;
+}
+
+.card-tension {
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--ink-muted);
+  line-height: 1.65;
+  margin-bottom: 1.5rem;
+}
+.case-card.small .card-tension { font-size: 0.93rem; margin-bottom: 1.2rem; }
+
+.card-outcome {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--accent);
+  line-height: 1.5;
+  margin-top: auto;
+  margin-bottom: 1.5rem;
+}
+.case-card.small .card-outcome { font-size: 0.88rem; margin-bottom: 1.1rem; }
+
+.card-scale {
+  font-size: 0.8rem;
+  color: var(--ink-faint);
+  letter-spacing: 0.01em;
+  padding-top: 1rem;
+  border-top: 0.5px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.card-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--accent);
+  opacity: 0;
+  transition: opacity 0.18s, gap 0.18s;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.case-card:hover .card-arrow { opacity: 1; gap: 0.55rem; }
+
+/* ── ADDITIONAL WORK ── */
+.additional {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: clamp(3.5rem, 6vw, 5.5rem) var(--gutter);
+}
+.additional-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.1rem;
+}
+.add-card {
+  background: transparent;
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.9rem 2.1rem;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  transition: background 0.15s, border-color 0.15s, opacity 0.55s ease, transform 0.55s ease;
+}
+.add-card:hover { background: var(--paper-card); border-color: var(--border-strong); }
+.add-title {
+  font-family: var(--serif);
+  font-size: 1.08rem;
+  font-weight: 600;
+  line-height: 1.38;
+  color: var(--ink);
+  letter-spacing: 0.01em;
+}
+.add-context { font-size: 0.9rem; color: var(--ink-muted); line-height: 1.65; }
+.method-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.tag {
+  font-size: 0.75rem;
+  color: var(--ink-muted);
+  background: var(--paper-warm);
+  border: 0.5px solid var(--border);
+  border-radius: 100px;
+  padding: 0.2rem 0.7rem;
+}
+
+/* ── COMPANY STRIP ── */
+.companies {
+  border-top: 0.5px solid var(--border);
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: clamp(3rem, 5vw, 4.5rem) var(--gutter);
+}
+.company-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+.company-item { display: flex; flex-direction: column; gap: 0.9rem; }
+.company-logo-link {
+  display: inline-block;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: opacity 0.15s;
+}
+.company-logo-link:hover { opacity: 0.55; }
+.company-logo-img {
+  display: block;
+  height: 32px;
+  width: auto;
+  object-fit: contain;
+}
+.company-desc { font-size: 0.85rem; color: var(--ink-faint); line-height: 1.55; }
+
+/* ── CONTACT SECTION ── */
+.contact-section {
+  border-top: 0.5px solid var(--border);
+  padding: clamp(4rem, 8vw, 7rem) var(--gutter);
+}
+.contact-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+}
+.contact-heading {
+  font-family: var(--serif);
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 0.75rem;
+}
+.contact-sub {
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--ink-muted);
+  line-height: 1.7;
+  margin-bottom: 2.25rem;
+  max-width: 480px;
+}
+.contact-links {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.contact-email {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.97rem;
+  font-weight: 500;
+  padding: 0.8rem 1.75rem;
+  border-radius: 100px;
+  transition: background 0.18s, transform 0.15s;
+}
+.contact-email:hover { background: #234830; transform: translateY(-1px); }
+.contact-email svg { transition: transform 0.15s; }
+.contact-email:hover svg { transform: translateX(3px); }
+.contact-linkedin {
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--ink-muted);
+  text-decoration: none;
+  border-bottom: 0.5px solid var(--border-strong);
+  padding-bottom: 0.1rem;
+  transition: color 0.15s, border-color 0.15s;
+}
+.contact-linkedin:hover { color: var(--ink); border-color: var(--ink); }
+
+/* ── FOOTER ── */
+footer { border-top: 0.5px solid var(--border); padding: 2.5rem var(--gutter); }
+.footer-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.footer-links { display: flex; gap: 1.75rem; align-items: center; flex-wrap: wrap; }
+.footer-links a { font-size: 0.9rem; color: var(--ink-muted); text-decoration: none; transition: color 0.15s; }
+.footer-links a:hover { color: var(--ink); }
+.footer-copy { font-size: 0.82rem; color: var(--ink-faint); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 720px) {
+  .secondary-row { grid-template-columns: 1fr; }
+  .case-card.large .card-visual { height: 260px; }
+  .case-card.small .card-visual { height: 200px; }
+  .nav-links { gap: 1.5rem; }
+  .footer-inner { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 480px) {
+  .nav-links li:nth-child(3) { display: none; }
+}
+/* Card image with dark overlay treatment */
+.card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.case-card:hover .card-img { transform: scale(1.03); }
+
+/* Dark gradient overlay sits on top of the image */
+.card-visual.has-image {
+  overflow: hidden;
+}
+.card-visual.has-image::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(20,20,18,0.18) 0%,
+    rgba(20,20,18,0.52) 60%,
+    rgba(20,20,18,0.78) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+/* Keep annotation line on top */
+.card-visual.has-image::after { z-index: 2; }
+
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Nadine Afriza</a>
+    <ul class="nav-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero wrapped for gradient + re-entry observation -->
+<div class="hero-wrap" id="hero-wrap">
+  <canvas id="hero-dots" aria-hidden="true"></canvas>
+  <section class="hero" id="hero">
+    <h1 class="hero-name">Nadine Afriza</h1>
+    <p class="hero-title">Senior UX Researcher &nbsp;·&nbsp; 6+ years &nbsp;·&nbsp; Jakarta, Indonesia</p>
+    <p class="hero-positioning">
+      6+ years across travel, e-commerce, and consulting. I specialize in <strong>mixed-methods research</strong> — combining behavioral data with qualitative depth to help product teams understand not just what is happening, but why. I also build the <strong>systems that make research scalable</strong>: automated feedback pipelines, self-service dashboards, and centralized repositories.
+    </p>
+    <a href="#work" class="cta-btn">
+      View my work
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <path d="M2 7H12M12 7L8 3M12 7L8 11" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </section>
+</div>
+
+<section class="featured" id="work">
+  <p class="section-label">Featured work</p>
+
+  <div class="case-grid">
+
+    <!-- LARGE CARD: Flight Checkout -->
+    <a href="case-study-flight-booking-funnel.html" class="case-card large">
+      <span class="card-annotation">Evidence analysis</span>
+      <div class="card-visual has-image">
+          <img src="images/annotated-checkout-flow.png" alt="Annotated checkout flow showing rage clicks and locked navigation steps" class="card-img">
+        </div>
+      <div class="card-body">
+        <div class="card-number">01 &nbsp;·&nbsp; Wego</div>
+        <h2 class="card-title">Diagnosing Why Users Dropped Off at Flight Checkout</h2>
+        <p class="card-tension">Users searched flights on Wego but abandoned before payment.</p>
+        <p class="card-outcome">Research drove checkout fixes and self-service cancellation planning.</p>
+        <div class="card-scale">
+          <span>52 session recordings &nbsp;·&nbsp; English &amp; Arabic travelers</span>
+          <span class="card-arrow">
+            Read case study
+            <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M2 7H12M12 7L8 3M12 7L8 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </div>
+      </div>
+    </a>
+
+    <!-- TWO SECONDARY CARDS -->
+    <div class="secondary-row">
+
+      <a href="case-study-wego-hotels.html" class="case-card small">
+        <span class="card-annotation">Competitive benchmarking</span>
+        <div class="card-visual has-image">
+            <img src="images/annotated-competitor-comparison.png" alt="Annotated competitor comparison — Wego vs Booking.com room selection" class="card-img">
+          </div>
+        <div class="card-body">
+          <div class="card-number">02 &nbsp;·&nbsp; Wego</div>
+          <h2 class="card-title">Building the Research Behind Wego's Hotel Booking Shift</h2>
+          <p class="card-tension">Wego wanted users to book hotels directly, but users still left to book elsewhere.</p>
+          <p class="card-outcome">Research reshaped the roadmap around payment flexibility, loyalty, and booking confidence.</p>
+          <div class="card-scale">
+            <span>8-platform study &nbsp;·&nbsp; MENA &nbsp;·&nbsp; English &amp; Arabic</span>
+            <span class="card-arrow">
+              Read
+              <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M2 7H12M12 7L8 3M12 7L8 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </div>
+        </div>
+      </a>
+
+      <a href="case-study-user-voice-hub.html" class="case-card small">
+        <span class="card-annotation">System architecture</span>
+        <div class="card-visual has-image">
+            <img src="images/pipeline-architecture-diagram.png" alt="Pipeline architecture diagram — 4 feedback sources into Looker dashboard" class="card-img">
+          </div>
+        <div class="card-body">
+          <div class="card-number">03 &nbsp;·&nbsp; Wego</div>
+          <h2 class="card-title">Building a Feedback System for Product Decisions</h2>
+          <p class="card-tension">Wego had no structured way to track what users were complaining about.</p>
+          <p class="card-outcome">Built the company's first centralized feedback pipeline.</p>
+          <div class="card-scale">
+            <span>20,000+ reviews &nbsp;·&nbsp; 4 sources &nbsp;·&nbsp; 45 categories</span>
+            <span class="card-arrow">
+              Read
+              <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M2 7H12M12 7L8 3M12 7L8 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<section class="additional">
+  <p class="section-label">More work</p>
+  <div class="additional-grid">
+
+    <a href="case-study-cx-dashboard.html" class="add-card">
+      <div>
+        <div class="card-number" style="margin-bottom:0.6rem;">Blibli</div>
+        <h3 class="add-title">Building a System That Turned 9,000 User Voices into Product Decisions</h3>
+      </div>
+      <div class="method-tags">
+        <span class="tag">Survey Design</span>
+        <span class="tag">Qualtrics + TextIQ</span>
+        <span class="tag">Cross-functional Workshops</span>
+      </div>
+      <p class="add-context">Built an e-commerce platform's first customer experience dashboard, automating survey analysis and connecting pain point data directly to product team decisions.</p>
+    </a>
+
+    <a href="case-study-bsi.html" class="add-card">
+      <div>
+        <div class="card-number" style="margin-bottom:0.6rem;">Aleph Labs &amp; BSI</div>
+        <h3 class="add-title">Mapping What Users Actually Need from a Banking App Built for Three Banks, Three Goals, and One Faith</h3>
+      </div>
+      <div class="method-tags">
+        <span class="tag">In-Depth Interviews</span>
+        <span class="tag">Card Sorting (n=54)</span>
+        <span class="tag">Usability Testing</span>
+      </div>
+      <p class="add-context">Led foundational research for a full mobile banking app redesign after the merger of three state-owned Islamic banks in Indonesia.</p>
+    </a>
+
+  </div>
+</section>
+
+<section class="companies">
+  <p class="section-label">Experience at</p>
+  <div class="company-list">
+
+    <div class="company-item">
+      <a href="https://www.wego.com" target="_blank" rel="noopener" class="company-logo-link" aria-label="Wego website">
+        <img src="images/logo-wego.png" alt="Wego" class="company-logo-img">
+      </a>
+      <span class="company-desc">Travel search and booking platform, 50M+ users across the Middle East and Asia</span>
+    </div>
+
+    <div class="company-item">
+      <a href="https://www.blibli.com" target="_blank" rel="noopener" class="company-logo-link" aria-label="Blibli website">
+        <img src="images/logo-blibli.png" alt="Blibli" class="company-logo-img">
+      </a>
+      <span class="company-desc">One of Indonesia's largest e-commerce marketplaces</span>
+    </div>
+
+    <div class="company-item">
+      <a href="https://www.aleph-labs.com" target="_blank" rel="noopener" class="company-logo-link" aria-label="Aleph Labs website">
+        <img src="images/logo-aleph-labs.png" alt="Aleph Labs" class="company-logo-img">
+      </a>
+      <span class="company-desc">Digital product and research consultancy working with enterprise clients across Southeast Asia</span>
+    </div>
+
+  </div>
+</section>
+
+<section class="contact-section" id="contact">
+  <div class="contact-inner">
+    <p class="section-label">Contact</p>
+    <h2 class="contact-heading">Let's talk.</h2>
+    <p class="contact-sub">Open to senior UX researcher roles and research leadership opportunities.</p>
+    <div class="contact-links">
+      <a href="mailto:nadine.afriza@gmail.com" class="contact-email">
+        nadine.afriza@gmail.com
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M2 7H12M12 7L8 3M12 7L8 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <a href="https://linkedin.com/in/nadineafz" target="_blank" rel="noopener" class="contact-linkedin">LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="mailto:nadine.afriza@gmail.com">nadine.afriza@gmail.com</a>
+      <a href="https://linkedin.com/in/nadineafz" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="Nadine_Afriza_CV.pdf">Download CV</a>
+    </div>
+    <span class="footer-copy">Nadine Afriza &copy; 2025</span>
+  </div>
+</footer>
+
+<script>
+  // ── Hero: fade in on load, and re-trigger on scroll re-entry ──
+  const heroWrap = document.getElementById('hero-wrap');
+  const hero = document.getElementById('hero');
+
+  const heroObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        hero.classList.add('hero-visible');
+      } else {
+        // Remove so it can re-animate on scroll back up
+        hero.classList.remove('hero-visible');
+      }
+    });
+  }, { threshold: 0.15 });
+
+  heroObserver.observe(heroWrap);
+
+  // ── Cards + additional: fade in once on scroll entry ──
+  const cardObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        setTimeout(() => el.classList.add('visible'), parseInt(el.dataset.delay) || 0);
+        cardObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.case-card, .add-card').forEach((el, i) => {
+    el.dataset.delay = i * 80;
+    cardObserver.observe(el);
+  });
+
+  // ── Animated connected dots — hero canvas ──
+  (function() {
+    const canvas = document.getElementById('hero-dots');
+    const ctx = canvas.getContext('2d');
+
+    // Accent colors from the design system
+    const DOT_COLOR   = '45,90,61';   // --accent green
+    const LINE_COLOR  = '45,90,61';
+    const NUM_DOTS    = 38;
+    const MAX_DIST    = 160;          // max px to draw a connecting line
+    const SPEED       = 0.38;
+    const DOT_R       = 2.2;
+
+    let W, H, dots;
+
+    function resize() {
+      W = canvas.width  = canvas.offsetWidth;
+      H = canvas.height = canvas.offsetHeight;
+    }
+
+    function makeDot() {
+      // Bias x toward the right half of the canvas
+      const x = W * 0.42 + Math.random() * W * 0.62;
+      const y = Math.random() * H;
+      const angle = Math.random() * Math.PI * 2;
+      return {
+        x: Math.min(x, W),
+        y,
+        vx: Math.cos(angle) * SPEED * (0.5 + Math.random()),
+        vy: Math.sin(angle) * SPEED * (0.5 + Math.random()),
+      };
+    }
+
+    function init() {
+      resize();
+      dots = Array.from({ length: NUM_DOTS }, makeDot);
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+
+      // Move dots, bounce off walls
+      dots.forEach(d => {
+        d.x += d.vx;
+        d.y += d.vy;
+        if (d.x < 0 || d.x > W) d.vx *= -1;
+        if (d.y < 0 || d.y > H) d.vy *= -1;
+      });
+
+      // Draw connecting lines
+      for (let i = 0; i < dots.length; i++) {
+        for (let j = i + 1; j < dots.length; j++) {
+          const dx = dots[i].x - dots[j].x;
+          const dy = dots[i].y - dots[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < MAX_DIST) {
+            const alpha = (1 - dist / MAX_DIST) * 0.28;
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(${LINE_COLOR},${alpha})`;
+            ctx.lineWidth = 0.8;
+            ctx.moveTo(dots[i].x, dots[i].y);
+            ctx.lineTo(dots[j].x, dots[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      // Draw dots
+      dots.forEach(d => {
+        const alpha = 0.45;
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(${DOT_COLOR},${alpha})`;
+        ctx.arc(d.x, d.y, DOT_R, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      requestAnimationFrame(draw);
+    }
+
+    window.addEventListener('resize', () => { resize(); });
+    init();
+    draw();
+  })();
+</script>
+</body>
+</html>
