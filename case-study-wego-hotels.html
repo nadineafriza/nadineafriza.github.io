@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wego Hotels — Nadine Afriza</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink: #1c1c19;
+  --ink-muted: #54544f;
+  --ink-faint: #8a8a84;
+  --paper: #faf8f4;
+  --paper-warm: #f0ede6;
+  --paper-card: #ffffff;
+  --accent: #2d5a3d;
+  --accent-mid: #4a8a62;
+  --accent-faint: rgba(45,90,61,0.07);
+  --border: rgba(28,28,25,0.09);
+  --border-strong: rgba(28,28,25,0.16);
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'DM Sans', system-ui, sans-serif;
+  --max: 760px;
+  --max-wide: 1100px;
+  --gutter: clamp(1.5rem, 5vw, 3rem);
+  --radius-md: 12px;
+  --radius-lg: 20px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  font-size: 18px;
+  line-height: 1.75;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 0%, rgba(196,216,202,0.42) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 60% at 10% 100%, rgba(222,213,192,0.32) 0%, transparent 58%),
+    radial-gradient(ellipse 55% 50% at 92% 55%, rgba(196,216,202,0.22) 0%, transparent 52%);
+}
+body > * { position: relative; z-index: 1; }
+
+/* ── NAV ── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(250,248,244,0.93);
+  backdrop-filter: blur(14px);
+  border-bottom: 0.5px solid var(--border);
+  padding: 0 var(--gutter);
+}
+.nav-inner {
+  max-width: var(--max-wide);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 62px;
+}
+.nav-logo {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: var(--ink);
+  text-decoration: none;
+}
+.nav-links { display: flex; gap: 2.25rem; list-style: none; align-items: center; }
+.nav-links a {
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--ink-muted);
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  transition: color 0.15s;
+}
+.nav-links a:hover { color: var(--ink); }
+.nav-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  color: var(--ink-muted);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.nav-back:hover { color: var(--ink); }
+
+/* ── ARTICLE ── */
+article {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: clamp(3.5rem, 8vw, 6rem) var(--gutter) clamp(4rem, 8vw, 7rem);
+}
+
+/* ── FADE IN ── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.fade-up.visible { opacity: 1; transform: none; }
+
+/* ── TITLE BLOCK ── */
+.cs-meta {
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-mid);
+  margin-bottom: 1.25rem;
+}
+.cs-title {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 600;
+  line-height: 1.18;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 1.25rem;
+}
+
+/* ── CONFIDENTIALITY ── */
+.confidentiality-note {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  font-size: 0.88rem;
+  font-weight: 400;
+  color: var(--ink-muted);
+  line-height: 1.55;
+  background: var(--paper-warm);
+  border: 0.5px solid var(--border-strong);
+  border-radius: 8px;
+  padding: 0.65rem 1rem;
+}
+
+/* ── DIVIDER ── */
+.divider { height: 0.5px; background: var(--border); margin: 3rem 0; }
+
+/* ── PROSE ── */
+p {
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--ink-muted);
+  line-height: 1.8;
+  margin-bottom: 1.25rem;
+}
+p:last-child { margin-bottom: 0; }
+p em { font-style: italic; color: var(--ink); }
+p strong { font-weight: 500; color: var(--ink); }
+
+/* ── SECTION LABEL ── */
+.section-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 1.5rem;
+}
+
+/* ── FINDING ── */
+.finding-number {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.6rem;
+}
+.finding-headline {
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 3.5vw, 2.1rem);
+  font-weight: 600;
+  line-height: 1.22;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+}
+
+/* ── APPROACH LIST ── */
+.approach-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-top: 1.5rem;
+}
+.approach-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.9rem 1.25rem;
+  font-size: 0.92rem;
+  font-weight: 300;
+  color: var(--ink-muted);
+  border-bottom: 0.5px solid var(--border);
+  background: var(--paper-card);
+  line-height: 1.55;
+}
+.approach-list li:last-child { border-bottom: none; }
+.approach-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent-mid);
+  flex-shrink: 0;
+  opacity: 0.6;
+}
+
+/* ── MISSING PATTERNS LIST ── */
+.gap-list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+.gap-item {
+  background: var(--paper-card);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0.9rem 1.1rem;
+  font-size: 0.88rem;
+  font-weight: 300;
+  color: var(--ink-muted);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  line-height: 1.45;
+}
+.gap-x {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #a03030;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+  opacity: 0.7;
+}
+
+/* ── STAT CARDS ── */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.875rem;
+  margin-top: 1.75rem;
+}
+.stat-card {
+  background: var(--paper-card);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.4rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.stat-number {
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.stat-label {
+  font-size: 0.82rem;
+  font-weight: 300;
+  color: var(--ink-muted);
+  line-height: 1.45;
+}
+.stat-card.highlight {
+  border-color: rgba(45,90,61,0.22);
+  background: var(--accent-faint);
+}
+.stat-card.highlight .stat-number { color: var(--accent); }
+
+/* ── SUS SCORE BAR ── */
+.sus-comparison {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1.75rem;
+  padding: 1.5rem;
+  background: var(--paper-card);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-md);
+}
+.sus-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.sus-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.sus-version {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--ink-faint);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.sus-score {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+.sus-row.before .sus-score { color: #a03030; }
+.sus-row.after .sus-score { color: var(--accent); }
+.sus-bar-track {
+  height: 7px;
+  background: var(--paper-warm);
+  border-radius: 100px;
+  overflow: hidden;
+}
+.sus-bar-fill {
+  height: 100%;
+  border-radius: 100px;
+}
+.sus-row.before .sus-bar-fill {
+  width: 58.7%;
+  background: rgba(160,48,48,0.4);
+}
+.sus-row.after .sus-bar-fill {
+  width: 73.8%;
+  background: var(--accent-mid);
+}
+.sus-caption {
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+  font-weight: 300;
+  padding-top: 0.5rem;
+  border-top: 0.5px solid var(--border);
+  margin-top: 0.25rem;
+}
+
+/* ── PATTERN CALLOUT ── */
+.pattern-callout {
+  background: var(--paper-warm);
+  border-left: 2.5px solid var(--accent);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0 0;
+}
+.pattern-callout p {
+  font-size: 0.95rem;
+  color: var(--ink);
+  font-weight: 400;
+  margin: 0;
+  line-height: 1.65;
+}
+.pattern-callout p + p {
+  margin-top: 0.5rem;
+  color: var(--ink-muted);
+  font-size: 0.88rem;
+  font-weight: 300;
+}
+
+/* ── IMAGE PLACEHOLDER ── */
+.img-placeholder {
+  background: var(--paper-warm);
+  border: 1.5px dashed rgba(28,28,25,0.15);
+  border-radius: var(--radius-md);
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: center;
+  margin-top: 1.75rem;
+}
+.img-placeholder.tall { min-height: 300px; justify-content: center; }
+.img-placeholder.medium { min-height: 220px; justify-content: center; }
+.img-placeholder .ph-label {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-mid);
+  background: rgba(45,90,61,0.08);
+  border: 0.5px solid rgba(45,90,61,0.2);
+  border-radius: 100px;
+  padding: 0.2rem 0.7rem;
+}
+.img-placeholder .ph-title {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.35;
+}
+.img-placeholder .ph-desc {
+  font-size: 0.83rem;
+  color: var(--ink-faint);
+  max-width: 420px;
+  line-height: 1.6;
+  font-weight: 300;
+}
+.img-placeholder svg { opacity: 0.18; }
+.table-caption {
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+  margin-top: 0.75rem;
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+/* ── ROADMAP SHIFT ── */
+.roadmap-shift {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1.75rem;
+}
+.rs-col {
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.rs-head {
+  padding: 0.75rem 1.25rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-bottom: 0.5px solid var(--border);
+}
+.rs-col.before .rs-head { background: rgba(160,48,48,0.06); color: #a03030; }
+.rs-col.after  .rs-head { background: var(--accent-faint); color: var(--accent); }
+.rs-col ul { list-style: none; padding: 0; }
+.rs-col ul li {
+  padding: 0.7rem 1.25rem;
+  font-size: 0.88rem;
+  font-weight: 300;
+  line-height: 1.5;
+  border-bottom: 0.5px solid var(--border);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+}
+.rs-col ul li:last-child { border-bottom: none; }
+.rs-col.before ul li { color: #a03030; }
+.rs-col.after  ul li { color: var(--accent); }
+.rs-marker {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 0.47rem;
+}
+.before .rs-marker { background: #a03030; opacity: 0.5; }
+.after  .rs-marker { background: var(--accent); opacity: 0.6; }
+
+/* ── REFLECTION ── */
+.reflection {
+  background: var(--accent-faint);
+  border: 0.5px solid rgba(45,90,61,0.15);
+  border-radius: var(--radius-md);
+  padding: 1.75rem 2rem;
+}
+.reflection .section-label { margin-bottom: 0.75rem; }
+.reflection p { font-size: 0.95rem; color: var(--ink-muted); margin: 0; }
+.reflection p + p { margin-top: 0.85rem; }
+
+/* ── NEXT CASE STUDY ── */
+.next-cs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.75rem 2rem;
+  background: var(--paper-card);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  margin-top: 3rem;
+}
+.next-cs:hover {
+  border-color: var(--border-strong);
+  box-shadow: 0 8px 32px rgba(28,28,25,0.07);
+  transform: translateY(-2px);
+}
+.next-cs-label {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.4rem;
+}
+.next-cs-title {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.35;
+}
+.next-cs-arrow {
+  flex-shrink: 0;
+  color: var(--accent);
+  opacity: 0;
+  transition: opacity 0.18s, transform 0.18s;
+}
+.next-cs:hover .next-cs-arrow { opacity: 1; transform: translateX(4px); }
+
+@media (max-width: 600px) {
+  .stat-row { grid-template-columns: 1fr 1fr; }
+  .gap-list { grid-template-columns: 1fr; }
+  .roadmap-shift { grid-template-columns: 1fr; }
+  .nav-links { gap: 1.25rem; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Nadine Afriza</a>
+    <ul class="nav-links">
+      <li>
+        <a href="index.html#work" class="nav-back">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          All work
+        </a>
+      </li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<article>
+
+  <!-- TITLE -->
+  <div class="fade-up">
+    <p class="cs-meta">02 &nbsp;·&nbsp; Wego &nbsp;·&nbsp; Hotel Booking</p>
+    <h1 class="cs-title">Building the Research Foundation for Wego's Shift into Hotel Booking</h1>
+    <p class="confidentiality-note">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true" style="flex-shrink:0; margin-top:1px;">
+        <rect x="2" y="5.5" width="9" height="6.5" rx="1.5" stroke="currentColor" stroke-width="1.2"/>
+        <path d="M4 5.5V4a2.5 2.5 0 0 1 5 0v1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+      </svg>
+      Some details have been intentionally generalized or omitted due to confidentiality.
+    </p>
+  </div>
+
+  <div class="divider fade-up"></div>
+
+  <!-- OPENING CONTEXT -->
+  <div class="fade-up">
+    <p class="section-label">Opening context</p>
+    <p>For years, Wego helped users compare hotel prices, then redirected them elsewhere to complete the booking.</p>
+    <p>Then the company decided to become a hotel booking platform itself.</p>
+    <p>The problem: nobody fully understood what users needed to feel confident booking on Wego.</p>
+  </div>
+
+  <div class="divider fade-up"></div>
+
+  <!-- RESEARCH QUESTION -->
+  <div class="fade-up">
+    <p class="section-label">The research question</p>
+    <p><strong>What was stopping users from booking hotels on Wego — and what needed to change before Wego could compete with Booking.com and Agoda?</strong></p>
+  </div>
+
+  <div class="divider fade-up"></div>
+
+  <!-- HOW I APPROACHED IT -->
+  <div class="fade-up">
+    <p class="section-label">How I approached it</p>
+    <p>I ran a multi-method research program across the full hotel booking journey:</p>
+    <ul class="approach-list">
+      <li><span class="approach-dot"></span>Competitive usability testing across 8 booking platforms</li>
+      <li><span class="approach-dot"></span>Interviews and card sorting to understand how users choose rooms</li>
+      <li><span class="approach-dot"></span>Heatmap and session recording analysis</li>
+      <li><span class="approach-dot"></span>Usability testing in English and Arabic</li>
+      <li><span class="approach-dot"></span>Survey of users across the Middle East</li>
+    </ul>
+  </div>
+
+  <div class="divider fade-up"></div>
+
+  <!-- WHAT I FOUND -->
+  <div class="fade-up">
+    <p class="section-label">What I found</p>
+  </div>
+
+  <!-- FINDING 1 -->
+  <div class="fade-up">
+    <p class="finding-number">Finding 01</p>
+    <h2 class="finding-headline">Wego was missing booking patterns users already expected</h2>
+    <p>The issue was not one broken screen. The product was missing interaction patterns users had already learned from other booking platforms.</p>
+    <p>Users struggled with four specific gaps:</p>
+  </div>
+
+  <ul class="gap-list fade-up">
+    <li class="gap-item"><span class="gap-x">✗</span>Comparing rooms across properties</li>
+    <li class="gap-item"><span class="gap-x">✗</span>Understanding cancellation policies</li>
+    <li class="gap-item"><span class="gap-x">✗</span>Seeing payment flexibility options</li>
+    <li class="gap-item"><span class="gap-x">✗</span>Finding key booking information quickly</li>
+  </ul>
+
+  <!-- Visual: Annotated comparison -->
+  <figure class="cs-figure fade-up">
+    <img src="images/annotated-competitor-comparison.png" alt="Annotated competitor comparison — Wego vs Agoda / Booking.com, showing gaps in room photos, cancellation clarity, and payment information" style="width:100%;border-radius:var(--radius-md);border:0.5px solid var(--border);display:block;">
+    <figcaption class="table-caption">Annotated competitor comparison — Wego vs Agoda / Booking.com</figcaption>
+  </figure>
+
+  <div class="divider fade-up"></div>
+
+  <!-- FINDING 2 -->
+  <div class="fade-up">
+    <p class="finding-number">Finding 02</p>
+    <h2 class="finding-headline">Trust was not the real barrier</h2>
+    <p>The team assumed users avoided booking because they did not trust Wego enough.</p>
+    <p>The research showed the opposite.</p>
+    <p>Users trusted Wego as a travel platform. The real barrier was flexibility — loyalty rewards, easier cancellation, and deferred payment options.</p>
+  </div>
+
+  <!-- Visual: 3 stat cards as specified -->
+  <div class="stat-row fade-up">
+    <div class="stat-card">
+      <span class="stat-number">85%</span>
+      <span class="stat-label">of users trusted Wego as a travel platform</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-number">68%</span>
+      <span class="stat-label">said they would book if prices matched competitors</span>
+    </div>
+    <div class="stat-card highlight">
+      <span class="stat-number">78%</span>
+      <span class="stat-label">said they would leave if their preferred payment method was unavailable</span>
+    </div>
+  </div>
+
+  <div class="pattern-callout fade-up">
+    <p>One finding changed the roadmap immediately.</p>
+    <p>78% of users said they would leave if their preferred payment method was unavailable. This moved payment flexibility from a nice-to-have to a strategic priority.</p>
+  </div>
+
+  <div class="divider fade-up"></div>
+
+  <!-- FINDING 3 -->
+  <div class="fade-up">
+    <p class="finding-number">Finding 03</p>
+    <h2 class="finding-headline">Users liked the redesign, but the interaction details created friction</h2>
+    <p>Wego launched a redesigned hotel search with a split-view layout — hotel list and map shown together on one screen. The redesign underperformed in A/B testing.</p>
+    <p>But usability testing revealed something unexpected: users actually <em>preferred</em> the redesign. The usability score improved significantly.</p>
+  </div>
+
+  <!-- SUS score comparison — converted from prose stat -->
+  <div class="sus-comparison fade-up">
+    <div class="sus-row before">
+      <div class="sus-meta">
+        <span class="sus-version">Original design</span>
+        <span class="sus-score">58.7</span>
+      </div>
+      <div class="sus-bar-track">
+        <div class="sus-bar-fill"></div>
+      </div>
+    </div>
+    <div class="sus-row after">
+      <div class="sus-meta">
+        <span class="sus-version">Redesign</span>
+        <span class="sus-score">73.8</span>
+      </div>
+      <div class="sus-bar-track">
+        <div class="sus-bar-fill"></div>
+      </div>
+    </div>
+    <p class="sus-caption">System Usability Scale (SUS) scores — higher is better. The redesign scored 15 points higher, crossing from "OK" into "Good" range.</p>
+  </div>
+
+  <div class="fade-up" style="margin-top: 1.75rem;">
+    <p>The real problems were in the interaction layer, not the design concept:</p>
+  </div>
+
+  <ul class="gap-list fade-up">
+    <li class="gap-item"><span class="gap-x">✗</span>Users ignored the map and went straight to the list</li>
+    <li class="gap-item"><span class="gap-x">✗</span>The map/list toggle was unclear</li>
+    <li class="gap-item"><span class="gap-x">✗</span>Price controls were buried inside filters</li>
+  </ul>
+
+  <!-- Visual: Annotated screenshot of redesign -->
+  <figure class="cs-figure fade-up">
+    <img src="images/annotated-redesign-screenshot.png" alt="Annotated redesign screenshot — split-view layout showing the forced list/map view, unclear toggle, and buried price controls" style="width:100%;border-radius:var(--radius-md);border:0.5px solid var(--border);display:block;">
+    <figcaption class="table-caption">Annotated redesign screenshot — split-view layout</figcaption>
+  </figure>
+
+  <div class="divider fade-up"></div>
+
+  <!-- WHAT CHANGED -->
+  <div class="fade-up">
+    <p class="section-label">What changed</p>
+    <p>The research shifted the roadmap away from trust-building and redirected product priorities entirely.</p>
+  </div>
+
+  <div class="roadmap-shift fade-up">
+    <div class="rs-col before">
+      <div class="rs-head">Before research</div>
+      <ul>
+        <li><span class="rs-marker"></span>Focus on trust-building features</li>
+        <li><span class="rs-marker"></span>Forced split-view search</li>
+        <li><span class="rs-marker"></span>Price controls in filters</li>
+      </ul>
+    </div>
+    <div class="rs-col after">
+      <div class="rs-head">After research</div>
+      <ul>
+        <li><span class="rs-marker"></span>Flexible payment options on roadmap</li>
+        <li><span class="rs-marker"></span>Loyalty features prioritized</li>
+        <li><span class="rs-marker"></span>Cancellation improvements added</li>
+        <li><span class="rs-marker"></span>Split-view emphasis reduced</li>
+        <li><span class="rs-marker"></span>Pricing visibility improved</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider fade-up"></div>
+
+  <!-- REFLECTION -->
+  <div class="reflection fade-up">
+    <p class="section-label">Reflection</p>
+    <p>This project taught me that product teams often try to optimize individual screens before understanding the full user expectation model first.</p>
+    <p>Once the team understood the booking patterns users already expected from competitors, product decisions became much easier to prioritize.</p>
+  </div>
+
+  <!-- NEXT CASE STUDY -->
+  <a href="case-study-user-voice-hub.html" class="next-cs fade-up">
+    <div>
+      <p class="next-cs-label">Next case study</p>
+      <p class="next-cs-title">Building a User Feedback System That Replaced Gut Feel with Evidence</p>
+    </div>
+    <svg class="next-cs-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </a>
+
+</article>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.07 });
+
+  document.querySelectorAll('.fade-up').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 35}ms`;
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
